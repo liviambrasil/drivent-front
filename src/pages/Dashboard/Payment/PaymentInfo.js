@@ -2,6 +2,7 @@ import {
   useHistory,
 } from "react-router-dom";
 import styled from "styled-components";
+import PaymentForm from "./creditCard";
 
 export default function PaymentInfo( { match } ) {
   console.log("passou aqui");
@@ -18,6 +19,9 @@ export default function PaymentInfo( { match } ) {
         <h3>{ticketType} + {locationType}</h3>
         <p>R$ {totalPrice}</p>
       </Card>
+
+      <PaymentForm/>
+      
     </>
   );
   
@@ -48,6 +52,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: column;
+margin-bottom: 10px;
 
  h3{
    margin-bottom:10px
@@ -56,5 +61,4 @@ flex-direction: column;
  p{
    font-size: 14px;
  }
-
 `;

@@ -16,31 +16,28 @@ import PaymentInfo from "./PaymentInfo";
 export default function Payment() {
   const match = useRouteMatch();
   console.log(match);
-  const dados={}
-  
   return(
     
-    <Container>
-      <Router>
-        <Switch>
-          <Route path={`${match.path}/livia`} exact>
-            <ChooseTickets match={ match } />
-          </Route>
+    <Router>
+      <Switch>
+        <Route path={`${match.path}/livia`} exact>
+          <ChooseTickets match={ match } />
+        </Route>
 
-          {/* <Route path={"dashboard/payment/complete"} exact>
-            <PaymentInfo />
-          </Route> */}
+        {/* <Route path={"dashboard/payment/complete"} exact>
+          <PaymentInfo />
+        </Route> */}
 
-          <Route path={`${match.path}/complete`} exact>
-            <PaymentInfo />
-          </Route>
-          
-          <Route path={`${match.path}`}>
-            <Redirect to={`${match.url}/livia`} />
-          </Route>
-        </Switch>
-      </Router>  
-    </Container>
+        <Route path={`${match.path}/complete`} exact>
+          <PaymentInfo />
+        </Route>
+        
+        <Route path={`${match.path}`}>
+          <Redirect to={`${match.url}/livia`} />
+        </Route>
+      </Switch>
+    </Router>  
+    
   );
 }
 

@@ -8,3 +8,9 @@
 body {
   font-family: "Lexend Deca", sans-serif;
 }
+
+#PaymentForm {
+  display: flex;
+  width: 300px;
+  align-items: center;
+}
