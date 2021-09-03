@@ -19,7 +19,7 @@ export default function ChooseTickets( { match } ) {
   useEffect(() => {
     api.enrollment.getPersonalInformations().then((response) => {
       console.log(response.data);
-      if(response.data.length) setIsRegistered(true);
+      if(response.data) setIsRegistered(true);
     });
   }, []);
 
@@ -78,15 +78,27 @@ export default function ChooseTickets( { match } ) {
             : <> </>
           }
         </>
-        : <NoRegister>Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</NoRegister>
+        : <NoRegister>
+          <p>Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</p>
+        </NoRegister>
       }
     </>
   );
 }
 
 const NoRegister = styled.p`
-  font-size: 20px;
-  color: #8E8E8E;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80%;
+
+  p{
+    width: 60%;
+    font-size: 20px;
+    color: #8E8E8E;
+    text-align: center;
+  }
 `;
 
 const Text = styled.p`
