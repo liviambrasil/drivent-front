@@ -5,13 +5,23 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../../components/Form/Button";
+import useApi from "../../../hooks/useApi";
 
 export default function ChooseTickets( { match } ) {
   const [isPresential, setIsPresential] = useState(null);
   const [isHotel, setIsHotel] = useState(null);
   const [total, setTotal] = useState(0);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const history = useHistory();
+  const api = useApi();
+
+  useEffect(() => {
+    api.enrollment.getPersonalInformations().then((response) => {
+      console.log(response.data);
+      if(response.data.length) setIsRegistered(true);
+    });
+  }, []);
 
   useEffect(() => {
     if(isPresential && isHotel) setTotal(600);
@@ -22,51 +32,62 @@ export default function ChooseTickets( { match } ) {
   return(
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
-      <Text>Primeiro, escolha sua modalidade de ingresso</Text>
-      <Selection>
-        <Presential onClick={() => setIsPresential(isPresential === null ? true : !isPresential)} isPresential={isPresential}>
-          <h1>Presencial</h1>
-          <p>R$ 250</p>
-        </Presential>
-        
-        <Online onClick={() => setIsPresential(isPresential === null ? false : !isPresential)} isPresential={isPresential}>
-          <h1>Online</h1>
-          <p>R$ 100</p>
-        </Online>
-      </Selection>
 
-      {isPresential === true 
-        ? <>
-          <Text>Ótimo! Agora escolha sua modalidade de hospedagem</Text>
+      {isRegistered
 
+        ?<>
+          <Text>Primeiro, escolha sua modalidade de ingresso</Text>
           <Selection>
-
-            <NoHotel onClick={() => setIsHotel(isHotel === null ? false : !isHotel)} isHotel={isHotel}>
-              <h1>Sem Hotel</h1>
-              <p>+ R$ 0</p>
-            </NoHotel>
-
-            <Hotel onClick={() => setIsHotel(isHotel === null ? true : !isHotel)} isHotel={isHotel}>
-              <h1>Com hotel</h1>
-              <p>+ R$ 350</p>
-            </Hotel>
-
+            <Presential onClick={() => setIsPresential(isPresential === null ? true : !isPresential)} isPresential={isPresential}>
+              <h1>Presencial</h1>
+              <p>R$ 250</p>
+            </Presential>
+            
+            <Online onClick={() => setIsPresential(isPresential === null ? false : !isPresential)} isPresential={isPresential}>
+              <h1>Online</h1>
+              <p>R$ 100</p>
+            </Online>
           </Selection>
-        </>
-        : <> </>
-      }
 
-      {(isPresential === true && isHotel !== null) || isPresential === false
-        ? <>
-          <Text>Fechado! O total ficou em <span>R$ {total}</span>. Agora é só confirmar:</Text>
-          <Button children="RESERVAR INGRESSO"></Button>
+          {isPresential === true 
+            ? <>
+              <Text>Ótimo! Agora escolha sua modalidade de hospedagem</Text>
+
+              <Selection>
+
+                <NoHotel onClick={() => setIsHotel(isHotel === null ? false : !isHotel)} isHotel={isHotel}>
+                  <h1>Sem Hotel</h1>
+                  <p>+ R$ 0</p>
+                </NoHotel>
+
+                <Hotel onClick={() => setIsHotel(isHotel === null ? true : !isHotel)} isHotel={isHotel}>
+                  <h1>Com hotel</h1>
+                  <p>+ R$ 350</p>
+                </Hotel>
+
+              </Selection>
+            </>
+            : <> </>
+          }
+
+          {(isPresential === true && isHotel !== null) || isPresential === false
+            ? <>
+              <Text>Fechado! O total ficou em <span>R$ {total}</span>. Agora é só confirmar:</Text>
+              <Button children="RESERVAR INGRESSO"></Button>
+            </>
+            : <> </>
+          }
         </>
-        : <> </>
+        : <NoRegister>Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</NoRegister>
       }
-      
     </>
   );
 }
+
+const NoRegister = styled.p`
+  font-size: 20px;
+  color: #8E8E8E;
+`;
 
 const Text = styled.p`
   font-size: 20px;

@@ -20,7 +20,7 @@ export default function Payment() {
     
     <Router>
       <Switch>
-        <Route path={`${match.path}/livia`} exact>
+        <Route path={`${match.path}/ticket`} exact>
           <ChooseTickets match={ match } />
         </Route>
 
@@ -33,7 +33,7 @@ export default function Payment() {
         </Route>
         
         <Route path={`${match.path}`}>
-          <Redirect to={`${match.url}/livia`} />
+          <Redirect to={`${match.url}/ticket`} />
         </Route>
       </Switch>
     </Router>  
