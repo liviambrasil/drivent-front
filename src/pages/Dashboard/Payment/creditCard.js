@@ -18,6 +18,16 @@ export default class PaymentForm extends React.Component {
   }
   
   handleInputChange = (e) => {
+    console.log(e.target.value.length);
+    console.log(parseInt(e.target.alt));
+    const int = parseInt(e.target.alt);
+    this.props.isComplete[`${e.target.name}`]=e.target.value;
+    
+    if(e.target.value.length > int) {
+      console.log("entrou aqui");
+      return;
+    }
+
     const { name, value } = e.target;
     
     this.setState({ [name]: value });
@@ -36,7 +46,8 @@ export default class PaymentForm extends React.Component {
         <Form>
         	<CardNumber
             type="tel"
-            name="number"
+            alt="19"
+            name="card"
             placeholder="Card Number"
             onChange={this.handleInputChange}
             onFocus={this.handleInputFocus}
@@ -59,6 +70,7 @@ export default class PaymentForm extends React.Component {
             />
             <CVC
               type="tel"
+              alt="3"
               name="cvc"
               placeholder="CVC"
               onChange={this.handleInputChange}

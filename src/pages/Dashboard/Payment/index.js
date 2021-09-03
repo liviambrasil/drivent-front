@@ -24,10 +24,6 @@ export default function Payment() {
           <ChooseTickets match={ match } />
         </Route>
 
-        {/* <Route path={"dashboard/payment/complete"} exact>
-          <PaymentInfo />
-        </Route> */}
-
         <Route path={`${match.path}/complete`} exact>
           <PaymentInfo />
         </Route>

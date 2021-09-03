@@ -1,8 +1,12 @@
+import { useState } from "react";
 import {
   useHistory,
 } from "react-router-dom";
 import styled from "styled-components";
 import PaymentForm from "./creditCard";
+import "react-credit-cards/es/styles-compiled.css";
+import Cards from "react-credit-cards";
+import { AiFillCheckCircle } from "react-icons/ai";
 
 export default function PaymentInfo( { match } ) {
   console.log("passou aqui");
@@ -10,7 +14,24 @@ export default function PaymentInfo( { match } ) {
   const ticketType = "Presencial";
   const locationType = "com Hotel";
   const totalPrice = "450";
+  const [disable, setDisable] = useState(true);
+  const [isComplete, setIsComplete] = useState( {  } );
+  const [paid, setPaid] = useState(false);
+
+  window.addEventListener("keyup", function(e) {
+    if(isComplete.name  && isComplete.card && isComplete.cvc && isComplete.expiry) {
+      console.log(isComplete.name);
+      console.log(isComplete.card);
+      console.log(isComplete.cvc);
+      console.log(isComplete.expiry);
+      setDisable(false);
+    }else{
+      setDisable(true);
+    }
+  });  
+
   return(
+    
     <>
       <Title>Ingresso e pagamento</Title>
       <Info>Ingresso escolhido</Info>
@@ -19,18 +40,23 @@ export default function PaymentInfo( { match } ) {
         <h3>{ticketType} + {locationType}</h3>
         <p>R$ {totalPrice}</p>
       </Card>
+      <Info>Pagamento</Info>
 
-      <PaymentForm/>
+      {!paid 
+        ?<>
+          <PaymentForm isComplete={isComplete}/>
+  
+          <Button disabled={disable} onClick={() => setPaid(true)}>Finalizar pagamento</Button>
+        </>
+        :<ConfirmationContainer>
+          <AiFillCheckCircle/> <h2><span>Pagamento confirmado!</span> <br/>
+          Prossiga para escolha de hospedagem e atividades</h2>
+        </ConfirmationContainer>
+      }
       
+      <Button  onClick={() => setPaid(!paid)}>Controle paid</Button>
     </>
   );
-  
-  // return(
-  //   <div onClick={() => console.log(match)}>
-  //    abaca
-  //     <button onClick={() => history.push("dashboard/payment/complete")}>go to minha parte</button>
-  //   </div> 
-  // );
 }
 
 const Title = styled.h1`
@@ -62,3 +88,29 @@ margin-bottom: 10px;
    font-size: 14px;
  }
 `;
+
+const Button = styled.button`
+width: 182px;
+height: 37px;
+background-color: #E0E0E0;
+box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+border-radius: 4px;
+margin-top :50px;
+`;
+
+const ConfirmationContainer = styled.div`
+display: flex;
+font-size: 16px;
+margin-top: 20px;
+align-items: center;
+  svg{
+    width:50px;
+    height: 50px;
+    color: #36B853;
+  }
+
+  span{
+    font-weight:bold;
+  }
+`;
+
