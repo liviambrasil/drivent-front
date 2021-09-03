@@ -107,7 +107,8 @@ border-radius: 5px;
 `;
 
 const CreditCardContainer = styled.div`
-    display:flex;   
+    display:flex;
+    margin-bottom: 30px;
 `;
 
 const Form = styled.form`

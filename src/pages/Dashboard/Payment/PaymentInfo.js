@@ -9,6 +9,7 @@ import Cards from "react-credit-cards";
 import { AiFillCheckCircle } from "react-icons/ai";
 import useApi from "../../../hooks/useApi";
 import UserContext from "../../../contexts/UserContext";
+import Button from "../../../components/Form/Button";
 
 export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
   const history = useHistory();
@@ -97,20 +98,21 @@ margin-bottom: 10px;
  }
 `;
 
-const Button = styled.button`
-width: 182px;
-height: 37px;
-background-color: #E0E0E0;
-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
-border-radius: 4px;
-margin-top :50px;
-`;
+// const Button = styled.button`
+// width: 182px;
+// height: 37px;
+// background-color: #E0E0E0;
+// box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+// border-radius: 4px;
+// margin-top :50px;
+// `;
 
 const ConfirmationContainer = styled.div`
 display: flex;
 font-size: 16px;
 margin-top: 20px;
 align-items: center;
+margin-bottom: 30px;
   svg{
     width:50px;
     height: 50px;
