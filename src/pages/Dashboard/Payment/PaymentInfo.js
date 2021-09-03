@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   useHistory,
 } from "react-router-dom";
@@ -7,6 +7,8 @@ import PaymentForm from "./creditCard";
 import "react-credit-cards/es/styles-compiled.css";
 import Cards from "react-credit-cards";
 import { AiFillCheckCircle } from "react-icons/ai";
+import useApi from "../../../hooks/useApi";
+import UserContext from "../../../contexts/UserContext";
 
 export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
   const history = useHistory();
@@ -17,6 +19,11 @@ export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
   const [isComplete, setIsComplete] = useState( {  } );
   const [paid, setPaid] = useState(false);
 
+  const api = useApi();
+
+  const { userData } = useContext(UserContext);
+  console.log(userData);
+
   window.addEventListener("keyup", function(e) {
     if(isComplete.name  && isComplete.number && isComplete.cvc && isComplete.expiry) {
       setDisable(false);
@@ -24,6 +31,13 @@ export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
       setDisable(true);
     }
   });  
+
+  function finishOrder() {
+    setPaid(true);
+
+    const userId = userData.user.id;
+    api.ticket.save({ userId, isPresential, isHotel, isPaid: paid });
+  }
 
   return(
     
@@ -41,7 +55,7 @@ export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
         ?<>
           <PaymentForm isComplete={isComplete}/>
   
-          <Button disabled={disable} onClick={() => setPaid(true)}>Finalizar pagamento</Button>
+          <Button disabled={disable} onClick={() => finishOrder()}>Finalizar pagamento</Button>
         </>
         :<ConfirmationContainer>
           <AiFillCheckCircle/> <h2><span>Pagamento confirmado!</span> <br/>
