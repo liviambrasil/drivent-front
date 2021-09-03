@@ -5,11 +5,19 @@ export default function HotelCard({
   maxOccupation,
   availableRooms,
   image,
+  setSelectedHotel,
+  selectedHotel,
+  id,
 }) {
   const roomClassification = ["Single ", "Double ", "Triple "];
   return (
     <>
-      <HotelOption image={image}>
+      <HotelOption
+        id={id}
+        image={image}
+        selectedHotel={selectedHotel}
+        onClick={() => setSelectedHotel(id)}
+      >
         <div className="image"></div>
         <p className="title">{name}</p>
         <p className="subtitles">Tipos de acomodação:</p>
@@ -26,7 +34,8 @@ export default function HotelCard({
 const HotelOption = styled.li`
   width: 196px;
   height: 264px;
-  background-color: #f1f1f1;
+  background-color: ${(props) =>
+    props.selectedHotel === props.id ? "#FFEED2" : "#f1f1f1"};
   margin: 10px 10px;
   border-radius: 10px;
   padding: 15px;
