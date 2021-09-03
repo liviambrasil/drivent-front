@@ -1,32 +1,22 @@
 import Typography from "@material-ui/core/Typography";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import HotelCard from "./HotelCard";
+import useApi from "../../../hooks/useApi";
 
 export default function Hotel() {
   const [isOnline, setIsOnline] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
   const [isHotel, setIsHotel] = useState(true);
   const [selectedHotel, setSelectedHotel] = useState(null);
-  const [hotelOptions, setHotelOptions] = useState([
-    {
-      id: 1,
-      name: "Driven Resort",
-      maxOccupation: 3,
-      availableRooms: 102,
-      image:
-        "https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg",
-    },
-    {
-      id: 2,
-      name: "Driven hostel",
-      maxOccupation: 2,
-      availableRooms: 50,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXbT9yw0Q1cjzI7VEZwiJNkJOidtqNN_P-bA&usqp=CAU",
-    },
-  ]);
+  const [hotelOptions, setHotelOptions] = useState([]);
+  const { hotel } = useApi();
 
+  useEffect(() => {
+    hotel.listAll().then((r) => {
+      setHotelOptions(r.data);
+    });
+  }, []);
   return (
     <>
       <StyledTypography variant="h4">
@@ -40,7 +30,7 @@ export default function Hotel() {
             setSelectedHotel={setSelectedHotel}
             id={h.id}
             name={h.name}
-            maxOccupation={h.maxOccupation}
+            maxOccupation={h.maxRoomOccupation}
             availableRooms={h.availableRooms}
             image={h.image}
           />
