@@ -18,13 +18,10 @@ export default class PaymentForm extends React.Component {
   }
   
   handleInputChange = (e) => {
-    console.log(e.target.value.length);
-    console.log(parseInt(e.target.alt));
     const int = parseInt(e.target.alt);
     this.props.isComplete[`${e.target.name}`]=e.target.value;
     
     if(e.target.value.length > int) {
-      console.log("entrou aqui");
       return;
     }
 

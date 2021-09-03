@@ -9,7 +9,6 @@ import Cards from "react-credit-cards";
 import { AiFillCheckCircle } from "react-icons/ai";
 
 export default function PaymentInfo( { match } ) {
-  console.log("passou aqui");
   const history = useHistory();
   const ticketType = "Presencial";
   const locationType = "com Hotel";
@@ -20,10 +19,6 @@ export default function PaymentInfo( { match } ) {
 
   window.addEventListener("keyup", function(e) {
     if(isComplete.name  && isComplete.card && isComplete.cvc && isComplete.expiry) {
-      console.log(isComplete.name);
-      console.log(isComplete.card);
-      console.log(isComplete.cvc);
-      console.log(isComplete.expiry);
       setDisable(false);
     }else{
       setDisable(true);
