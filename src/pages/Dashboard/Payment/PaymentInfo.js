@@ -49,7 +49,6 @@ export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
         </ConfirmationContainer>
       }
       
-      <Button  onClick={() => setPaid(!paid)}>Controle paid</Button>
     </>
   );
 }

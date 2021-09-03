@@ -16,7 +16,6 @@ export default function ChooseTickets( { match, isPresential, setIsPresential, i
 
   useEffect(() => {
     api.enrollment.getPersonalInformations().then((response) => {
-      console.log(response.data);
       if(response.data) setIsRegistered(true);
     });
   }, []);
@@ -81,7 +80,6 @@ export default function ChooseTickets( { match, isPresential, setIsPresential, i
         </NoRegister>
       }
       
-      <button onClick={() => setIsRegistered(true)} > Controle Register</button>
     </>
   );
 }
