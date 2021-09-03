@@ -2,17 +2,15 @@ import { Typography } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import {
   useHistory,
+  useRouteMatch
 } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../../components/Form/Button";
 import useApi from "../../../hooks/useApi";
 
-export default function ChooseTickets( { match } ) {
-  const [isPresential, setIsPresential] = useState(null);
-  const [isHotel, setIsHotel] = useState(null);
-  const [total, setTotal] = useState(0);
+export default function ChooseTickets( { match, isPresential, setIsPresential, isHotel, setIsHotel, total, setTotal  } ) {
   const [isRegistered, setIsRegistered] = useState(false);
-
+  
   const history = useHistory();
   const api = useApi();
 
@@ -73,7 +71,7 @@ export default function ChooseTickets( { match } ) {
           {(isPresential === true && isHotel !== null) || isPresential === false
             ? <>
               <Text>Fechado! O total ficou em <span>R$ {total}</span>. Agora é só confirmar:</Text>
-              <Button children="RESERVAR INGRESSO"></Button>
+              <Button onClick={() => history.push(`${match.path}/complete`)} children="RESERVAR INGRESSO"></Button>
             </>
             : <> </>
           }
@@ -82,6 +80,8 @@ export default function ChooseTickets( { match } ) {
           <p>Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</p>
         </NoRegister>
       }
+      
+      <button onClick={() => setIsRegistered(true)} > Controle Register</button>
     </>
   );
 }
