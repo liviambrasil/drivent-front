@@ -1,27 +1,129 @@
 import { Typography } from "@material-ui/core";
+import { useEffect, useState } from "react";
 import {
   useHistory,
 } from "react-router-dom";
 import styled from "styled-components";
-import { Title } from "../../../components/Auth";
+import Button from "../../../components/Form/Button";
 
 export default function ChooseTickets( { match } ) {
-  const history=useHistory();
+  const [isPresential, setIsPresential] = useState(null);
+  const [isHotel, setIsHotel] = useState(null);
+  const [total, setTotal] = useState(0);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if(isPresential && isHotel) setTotal(600);
+    if(isPresential && !isHotel) setTotal(250);
+    if(!isPresential) setTotal(100);
+  }, [isPresential, isHotel]);
+
   return(
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
       <Text>Primeiro, escolha sua modalidade de ingresso</Text>
-      <button onClick={() => history.push(`${match.path}/complete`)}> "exemplo parte da livia"</button>
+      <Selection>
+        <Presential onClick={() => setIsPresential(isPresential === null ? true : !isPresential)} isPresential={isPresential}>
+          <h1>Presencial</h1>
+          <p>R$ 250</p>
+        </Presential>
+        
+        <Online onClick={() => setIsPresential(isPresential === null ? false : !isPresential)} isPresential={isPresential}>
+          <h1>Online</h1>
+          <p>R$ 100</p>
+        </Online>
+      </Selection>
+
+      {isPresential === true 
+        ? <>
+          <Text>Ótimo! Agora escolha sua modalidade de hospedagem</Text>
+
+          <Selection>
+
+            <NoHotel onClick={() => setIsHotel(isHotel === null ? false : !isHotel)} isHotel={isHotel}>
+              <h1>Sem Hotel</h1>
+              <p>+ R$ 0</p>
+            </NoHotel>
+
+            <Hotel onClick={() => setIsHotel(isHotel === null ? true : !isHotel)} isHotel={isHotel}>
+              <h1>Com hotel</h1>
+              <p>+ R$ 350</p>
+            </Hotel>
+
+          </Selection>
+        </>
+        : <> </>
+      }
+
+      {(isPresential === true && isHotel !== null) || isPresential === false
+        ? <>
+          <Text>Fechado! O total ficou em <span>R$ {total}</span>. Agora é só confirmar:</Text>
+          <Button children="RESERVAR INGRESSO"></Button>
+        </>
+        : <> </>
+      }
+      
     </>
   );
 }
 
 const Text = styled.p`
-font-size: 20px;
-color: #8E8E8E;
+  font-size: 20px;
+  color: #8E8E8E;
+  margin-bottom: 17px;
+  span{
+    font-weight: bold;
+  }
 `;
 
 const StyledTypography = styled(Typography)`
   margin-bottom: 20px!important;
 `;
 
+const Selection = styled.div`
+  display:flex;
+`;
+
+const Card = styled.div`
+  width: 145px;
+  height: 145px;
+  font-size: 16px;
+  color: #454545;
+  border-radius:20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 24px 44px 0;
+  border: 1px solid #CECECE;
+
+  h1{
+    margin-bottom: 5px
+  }
+
+  p{
+    font-size: 14px;
+    color: #8E8E8E;
+  }
+`;
+
+const Presential = styled(Card) `
+  background-color: ${props => props.isPresential === true ? "#FFEED2" : "#fff"};
+  border: ${props => props.isPresential === true ? "none" : "1px solid #CECECE"};
+`;
+
+const Online = styled(Card) `
+  background-color: ${props => props.isPresential === false ? "#FFEED2" : "#fff"};
+  border: ${props => props.isPresential === false ? "none" : "1px solid #CECECE"};
+`;
+
+const Hotel = styled(Card) `
+  background-color: ${props => props.isHotel === true ? "#FFEED2" : "#fff"};
+  border: ${props => props.isHotel === true ? "none" : "1px solid #CECECE"};
+`;
+
+const NoHotel = styled(Card) `
+  background-color: ${props => props.isHotel === false ? "#FFEED2" : "#fff"};
+  border: ${props => props.isHotel === false ? "none" : "1px solid #CECECE"};
+`;
