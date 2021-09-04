@@ -9,4 +9,12 @@ export default class Hotel extends AuthenticatedApi {
       },
     });
   }
+
+  listRooms(hotelId) {
+    return api.get(`/hotels/${hotelId}`, {
+      headers: {
+        ...this.getAuthorizationHeader(),
+      },
+    });
+  }
 }

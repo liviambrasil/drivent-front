@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import HotelCard from "./HotelCard";
 import useApi from "../../../hooks/useApi";
+import Rooms from "./Rooms";
 
 export default function Hotel() {
   const [isOnline, setIsOnline] = useState(false);
@@ -17,6 +18,7 @@ export default function Hotel() {
       setHotelOptions(r.data);
     });
   }, []);
+
   return (
     <>
       <StyledTypography variant="h4">
@@ -48,6 +50,7 @@ export default function Hotel() {
           de fazer a escolha de hospedagem
         </NotPaidMessage>
       </CenterMessage>
+      <Rooms hotelId={selectedHotel} />
     </>
   );
 }
