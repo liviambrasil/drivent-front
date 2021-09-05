@@ -49,7 +49,11 @@ export default function Rooms({ hotelId }) {
           />
         ))}
       </RoomsList>
-      {selectedRoomId && <Button>RESERVAR QUARTO</Button>}
+      {selectedRoomId && (
+        <Button onClick={() => hotel.saveReservation(selectedRoomId)}>
+          RESERVAR QUARTO
+        </Button>
+      )}
     </>
   );
 

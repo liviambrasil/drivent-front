@@ -17,4 +17,16 @@ export default class Hotel extends AuthenticatedApi {
       },
     });
   }
+
+  saveReservation(roomId) {
+    api.post(
+      `/hotels/reservation/${roomId}`,
+      {},
+      {
+        headers: {
+          ...this.getAuthorizationHeader(),
+        },
+      }
+    );
+  }
 }
