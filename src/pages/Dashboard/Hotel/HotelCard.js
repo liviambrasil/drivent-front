@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { getHotelTypeByRoomMaxOcuppation } from "./utils/getHotelTypeByRoomMaxOccupation";
 
 export default function HotelCard({
   name,
@@ -9,7 +10,8 @@ export default function HotelCard({
   selectedHotel,
   id,
 }) {
-  const roomClassification = ["Single ", "Double ", "Triple "];
+  const hotelType = getHotelTypeByRoomMaxOcuppation(maxOccupation);
+
   return (
     <>
       <HotelOption
@@ -21,9 +23,7 @@ export default function HotelCard({
         <div className="image"></div>
         <p className="title">{name}</p>
         <p className="subtitles">Tipos de acomodação:</p>
-        <p className="values">
-          {roomClassification.filter((r, i) => i <= maxOccupation - 1)}
-        </p>
+        <p className="values">{hotelType}</p>
         <p className="subtitles">Vagas disponíveis:</p>
         <p className="values">{availableRooms}</p>
       </HotelOption>

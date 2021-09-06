@@ -5,8 +5,7 @@ import HotelCard from "./HotelCard";
 
 export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
   const [isOnline, setIsOnline] = useState(false);
-  const [isPaid, setIsPaid] = useState(false);
-  const [isHotel, setIsHotel] = useState(true);
+  const [isPaid, setIsPaid] = useState(true);
   const { hotel } = useApi();
 
   const [hotelOptions, setHotelOptions] = useState([]);
@@ -17,22 +16,26 @@ export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
     });
   }, []);
 
+  const isPaidOrIsNotOnline = isPaid && !isOnline;
+
   return (
     <>
+      {isPaidOrIsNotOnline && <Title>Primeiro, escolha seu hotel</Title>}
       <ChooseHotel>
-        {hotelOptions.map((h) => (
-          <HotelCard
-            selectedHotel={selectedHotel}
-            setSelectedHotel={setSelectedHotel}
-            id={h.id}
-            name={h.name}
-            maxOccupation={h.maxRoomOccupation}
-            availableRooms={h.availableRooms}
-            image={h.image}
-          />
-        ))}
+        {isPaidOrIsNotOnline &&
+          hotelOptions.map((h) => (
+            <HotelCard
+              selectedHotel={selectedHotel}
+              setSelectedHotel={setSelectedHotel}
+              id={h.id}
+              name={h.name}
+              maxOccupation={h.maxRoomOccupation}
+              availableRooms={h.availableRooms}
+              image={h.image}
+            />
+          ))}
       </ChooseHotel>
-      <CenterMessage isHotel={isHotel}>
+      <CenterMessage hidden={isPaidOrIsNotOnline}>
         <OnlineMessage isOnline={isOnline}>
           Sua modalidade de ingresso não inclui hospedagem
           <br />
@@ -52,11 +55,15 @@ const ChooseHotel = styled.ul`
   width: 100%;
   display: flex;
 `;
-
+const Title = styled.p`
+  color: #8e8e8e;
+  font-size: 20px;
+  margin: 36px 0;
+`;
 const CenterMessage = styled.div`
   width: 100%;
   height: 80%;
-  display: ${(props) => (props.isHotel ? "none" : " flex")};
+  display: ${({ hidden }) => (hidden ? "none" : "flex")};
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -72,5 +79,5 @@ const OnlineMessage = styled.p`
 `;
 
 const NotPaidMessage = styled.p`
-  ${(props) => (props.isPaid ? "" : "display: none")}
+  ${(props) => (!props.isPaid ? "" : "display: none")}
 `;

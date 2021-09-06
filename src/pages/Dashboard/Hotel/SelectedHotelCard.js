@@ -1,16 +1,38 @@
 import styled from "styled-components";
+import Button from "../../../components/Form/Button";
+import { getRoomTypeByMaxOcuppation } from "./Rooms/utils/getRoomTypeByMaxOccupation";
 import TextSection from "./TextSection";
 
-export default function SelectedHotel({ image, name }) {
+export default function SelectedHotel({ reservation, clearReservation }) {
+  const {
+    hotel,
+    number: roomNumber,
+    currentOccupation,
+    maxOccupation,
+  } = reservation;
+  const roomType = getRoomTypeByMaxOcuppation(maxOccupation);
+
   return (
     <>
+      <PageTitle>Você já escolheu seu quarto:</PageTitle>
       <Container>
-        <Banner image={image} />
-        <Title>{name}</Title>
+        <Banner image={hotel.image} />
+        <Title>{hotel.name}</Title>
 
-        <TextSection title="Quarto reservado" content={}/>
-        <TextSection title="Pessoas no seu Quarto" content={}/>
+        <TextSection
+          title="Quarto reservado"
+          content={`${roomNumber} (${roomType})`}
+        />
+        <TextSection
+          title="Pessoas no seu Quarto"
+          content={
+            currentOccupation > 1
+              ? `Você e mais ${currentOccupation - 1}`
+              : "Só você"
+          }
+        />
       </Container>
+      <Button onClick={clearReservation}>TROCAR DE QUARTO</Button>
     </>
   );
 }
@@ -18,10 +40,16 @@ export default function SelectedHotel({ image, name }) {
 const Container = styled.div`
   width: 196px;
   height: 264px;
-  background-color: "#f1f1f1";
-  margin: 10px 10px;
+  background-color: #ffeed2;
+  margin: 10px 0px;
   border-radius: 10px;
   padding: 15px;
+`;
+
+const PageTitle = styled.p`
+  color: #8e8e8e;
+  font-size: 20px;
+  margin: 36px 0;
 `;
 
 const Banner = styled.div`

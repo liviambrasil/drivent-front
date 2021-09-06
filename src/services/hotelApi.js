@@ -11,7 +11,7 @@ export default class Hotel extends AuthenticatedApi {
   }
 
   listRooms(hotelId) {
-    return api.get(`/hotels/${hotelId}`, {
+    return api.get(`/hotels/${hotelId}/rooms`, {
       headers: {
         ...this.getAuthorizationHeader(),
       },
@@ -19,7 +19,7 @@ export default class Hotel extends AuthenticatedApi {
   }
 
   saveReservation(roomId) {
-    api.post(
+    return api.post(
       `/hotels/reservation/${roomId}`,
       {},
       {
@@ -28,5 +28,13 @@ export default class Hotel extends AuthenticatedApi {
         },
       }
     );
+  }
+
+  getReservation() {
+    return api.get("/hotels/reservation", {
+      headers: {
+        ...this.getAuthorizationHeader(),
+      },
+    });
   }
 }

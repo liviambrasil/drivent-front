@@ -8,7 +8,7 @@ import Room from "./Room";
 
 import { scrollToEnd, scrollToRooms } from "./utils/scroll";
 
-export default function Rooms({ hotelId }) {
+export default function Rooms({ hotelId, fetchReservation }) {
   const [rooms, setRooms] = useState(null);
   const [selectedRoomId, setSelectedRoomId] = useState(null);
   const { hotel } = useApi();
@@ -50,7 +50,11 @@ export default function Rooms({ hotelId }) {
         ))}
       </RoomsList>
       {selectedRoomId && (
-        <Button onClick={() => hotel.saveReservation(selectedRoomId)}>
+        <Button
+          onClick={() =>
+            hotel.saveReservation(selectedRoomId).then(() => fetchReservation())
+          }
+        >
           RESERVAR QUARTO
         </Button>
       )}
