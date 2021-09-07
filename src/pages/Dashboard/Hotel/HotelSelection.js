@@ -25,6 +25,7 @@ export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
         {isPaidOrIsNotOnline &&
           hotelOptions.map((h) => (
             <HotelCard
+              key={h.id}
               selectedHotel={selectedHotel}
               setSelectedHotel={setSelectedHotel}
               id={h.id}

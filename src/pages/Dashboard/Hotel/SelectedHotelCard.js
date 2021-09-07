@@ -5,8 +5,9 @@ import TextSection from "./TextSection";
 
 export default function SelectedHotel({ reservation, clearReservation }) {
   const {
-    hotel,
-    number: roomNumber,
+    hotelName,
+    hotelImage,
+    roomNumber,
     currentOccupation,
     maxOccupation,
   } = reservation;
@@ -16,8 +17,8 @@ export default function SelectedHotel({ reservation, clearReservation }) {
     <>
       <PageTitle>Você já escolheu seu quarto:</PageTitle>
       <Container>
-        <Banner image={hotel.image} />
-        <Title>{hotel.name}</Title>
+        <Banner image={hotelImage} />
+        <Title>{hotelName}</Title>
 
         <TextSection
           title="Quarto reservado"
