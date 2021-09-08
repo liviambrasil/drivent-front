@@ -1,18 +1,14 @@
 import { useState, useContext } from "react";
-import {
-  useHistory,
-} from "react-router-dom";
 import styled from "styled-components";
 import PaymentForm from "./creditCard";
 import "react-credit-cards/es/styles-compiled.css";
-import Cards from "react-credit-cards";
 import { AiFillCheckCircle } from "react-icons/ai";
 import useApi from "../../../hooks/useApi";
 import UserContext from "../../../contexts/UserContext";
 import Button from "../../../components/Form/Button";
+import { useHistory } from "react-router";
 
 export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
-  const history = useHistory();
   const ticketType = isPresential ? "Presencial" :"Online";
   const locationType = isHotel ? "com Hotel" : "sem Hotel";
   const totalPrice = total;
@@ -23,7 +19,6 @@ export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
   const api = useApi();
 
   const { userData } = useContext(UserContext);
-  console.log(userData);
 
   window.addEventListener("keyup", function(e) {
     if(isComplete.name  && isComplete.number && isComplete.cvc && isComplete.expiry) {
@@ -34,10 +29,17 @@ export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
   });  
 
   function finishOrder() {
-    setPaid(true);
-
     const userId = userData.user.id;
-    api.ticket.save({ userId, isPresential, isHotel, isPaid: paid });
+    const promise = api.ticket.save({ userId, isPresential, isHotel, isPaid: paid });
+
+    promise.then(() => {
+      setPaid(true);
+    });
+
+    promise.catch(() => {
+      alert("Você já adquiriu o seu ingresso");
+      setPaid(true);
+    });
   }
 
   return(
@@ -52,7 +54,7 @@ export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
       </Card>
       <Info>Pagamento</Info>
 
-      {!paid 
+      {!paid
         ?<>
           <PaymentForm isComplete={isComplete}/>
   
@@ -97,15 +99,6 @@ margin-bottom: 10px;
    font-size: 14px;
  }
 `;
-
-// const Button = styled.button`
-// width: 182px;
-// height: 37px;
-// background-color: #E0E0E0;
-// box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
-// border-radius: 4px;
-// margin-top :50px;
-// `;
 
 const ConfirmationContainer = styled.div`
 display: flex;

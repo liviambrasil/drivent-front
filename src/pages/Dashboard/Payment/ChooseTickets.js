@@ -1,9 +1,6 @@
 import { Typography } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import {
-  useHistory,
-  useRouteMatch
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../../components/Form/Button";
 import useApi from "../../../hooks/useApi";
