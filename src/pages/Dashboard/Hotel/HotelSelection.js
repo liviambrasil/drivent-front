@@ -4,7 +4,7 @@ import useApi from "../../../hooks/useApi";
 import HotelCard from "./HotelCard";
 
 export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
-  const [isOnline, setIsOnline] = useState(false);
+  const [isPresencial, setIsPresencial] = useState(false);
   const [isPaid, setIsPaid] = useState(true);
   const { hotel } = useApi();
 
@@ -16,13 +16,13 @@ export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
     });
   }, []);
 
-  const isPaidOrIsNotOnline = isPaid && !isOnline;
+  const isPaidAndPresencial = isPresencial && isPaid;
 
   return (
     <>
-      {isPaidOrIsNotOnline && <Title>Primeiro, escolha seu hotel</Title>}
+      {isPaidAndPresencial && <Title>Primeiro, escolha seu hotel</Title>}
       <ChooseHotel>
-        {isPaidOrIsNotOnline &&
+        {isPaidAndPresencial &&
           hotelOptions.map((h) => (
             <HotelCard
               key={h.id}
@@ -36,17 +36,24 @@ export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
             />
           ))}
       </ChooseHotel>
-      <CenterMessage hidden={isPaidOrIsNotOnline}>
-        <OnlineMessage isOnline={isOnline}>
-          Sua modalidade de ingresso não inclui hospedagem
-          <br />
-          Prossiga para a escolha de atividades
-        </OnlineMessage>
-        <NotPaidMessage isPaid={isPaid}>
-          Você precisa ter confirmado pagamento antes
-          <br />
-          de fazer a escolha de hospedagem
-        </NotPaidMessage>
+      <CenterMessage hidden={isPaidAndPresencial}>
+        {isPaid ? (
+          isPresencial ? (
+            ""
+          ) : (
+            <OnlineMessage isPresencial={!(isPresencial && isPaid)}>
+              Sua modalidade de ingresso não inclui hospedagem
+              <br />
+              Prossiga para a escolha de atividades
+            </OnlineMessage>
+          )
+        ) : (
+          <NotPaidMessage isPaid={isPaid}>
+            Você precisa ter confirmado pagamento antes
+            <br />
+            de fazer a escolha de hospedagem
+          </NotPaidMessage>
+        )}
       </CenterMessage>
     </>
   );
@@ -76,9 +83,9 @@ const CenterMessage = styled.div`
 `;
 
 const OnlineMessage = styled.p`
-  ${(props) => (props.isOnline ? "" : "display: none")}
+  /* ${(props) => (props.isPresencial ? "" : "display: none")} */
 `;
 
 const NotPaidMessage = styled.p`
-  ${(props) => (!props.isPaid ? "" : "display: none")}
+  /* ${(props) => (!props.isPaid ? "" : "display: none")} */
 `;
