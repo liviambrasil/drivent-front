@@ -15,8 +15,8 @@ export default function Payment() {
   const [isPresential, setIsPresential] = useState(null);
   const [isHotel, setIsHotel] = useState(null);
   const [total, setTotal] = useState(0);
+
   return(
-    
     <Router>
       <Switch>
         <Route path={`${match.path}/ticket`} exact>
