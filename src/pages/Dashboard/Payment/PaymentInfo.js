@@ -19,11 +19,7 @@ export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
   const api = useApi();
 
   const { userData } = useContext(UserContext);
-<<<<<<< HEAD
-
-=======
   
->>>>>>> 0872e1f9311c768b7c635c0c62de32d15cc14560
   window.addEventListener("keyup", function(e) {
     if(isComplete.name  && isComplete.number && isComplete.cvc && isComplete.expiry) {
       setDisable(false);
