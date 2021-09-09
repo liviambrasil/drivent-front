@@ -14,10 +14,10 @@ export default function Activities() {
     }, []);
   });
 
+
   return (
     <>
       <StyledTypography variant="h4">Escolha de atividades</StyledTypography>
-
       {!presential
         ? <NoRegister>
           <p>Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades.</p>
