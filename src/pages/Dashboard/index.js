@@ -16,7 +16,7 @@ import Certificate from "./Certificate";
 export default function Dashboard() {
   const { eventInfo } = useContext(EventInfoContext);
   const match = useRouteMatch();
-
+  
   return (
     <DashboardLayout background={eventInfo.backgroundImage}>
       <NavigationBar />
