@@ -1,20 +1,36 @@
 import styled from "styled-components";
 import useApi from "../../../hooks/useApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Button from "../../../components/Form/Button";
 export default function Activities() {
   const api = useApi();
-  
+  const [eventDays, setEventDays] = useState([]);
   useEffect(() => {
-    api.activity.getActivities().then((response) => {
+    api.activity.getDays().then((response) => {
       console.log(response.data);
+      setEventDays(response.data); 
     });
   }, []);
+
+  function getLocations() {
+    api.activity.getLocations().then((response) => {
+      console.log(response.data);
+    });
+  }
   
   return (
     <>
-      <Title>Ingresso e pagamento</Title>
-      <Info>Ingresso escolhido</Info>
-    </>
+      <Title>Escolha de atividades</Title>
+      <Info>Primeiro, filtre pelo dia do evento</Info>
+
+      {eventDays.map((d, index) => {
+        return(
+          <Button key = { index} onClick={getLocations}>
+            <p>{d.dayInfo}</p>
+          </Button>
+        );
+      })}
+    </> 
   );
 }
 
