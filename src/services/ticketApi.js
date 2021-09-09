@@ -1,12 +1,20 @@
 import AuthenticatedApi from "./AuthenticatedApi";
 import api from "./api";
 
-export default class Ticket extends AuthenticatedApi {
-  getTicket() {
+export default class TicketApi extends AuthenticatedApi {
+  save(body) {
+    return api.post("/ticket", body, {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  };
+
+  get() {
     return api.get("/ticket", {
       headers: {
-        ...this.getAuthorizationHeader(),
-      },
+        ...this.getAuthorizationHeader()
+      }
     });
   }
 }

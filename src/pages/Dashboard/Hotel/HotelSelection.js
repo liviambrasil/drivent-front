@@ -62,7 +62,7 @@ export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
   );
 
   function fetchTicketInfo() {
-    ticket.getTicket().then(({ data }) => {
+    ticket.get().then(({ data }) => {
       setIsPaid(data.isPaid);
       setIsPresencial(data.isPresential);
       setIsHotel(data.isHotel);
