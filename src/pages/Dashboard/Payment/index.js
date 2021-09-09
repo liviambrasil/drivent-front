@@ -26,7 +26,7 @@ export default function Payment() {
         </Route>
 
         <Route path={`${match.path}/complete`} exact>
-          <PaymentInfo isPresential={isPresential} isHotel={isHotel} total={total} paid={paid} setPaid={setPaid}/>
+          <PaymentInfo isPresential={isPresential} isHotel={isHotel} setIsHotel={setIsHotel} total={total} paid={paid} setPaid={setPaid}/>
         </Route>
         
         <Route path={`${match.path}`}>

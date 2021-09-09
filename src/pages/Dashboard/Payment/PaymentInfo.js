@@ -7,7 +7,7 @@ import useApi from "../../../hooks/useApi";
 import UserContext from "../../../contexts/UserContext";
 import Button from "../../../components/Form/Button";
 
-export default function PaymentInfo( { match, isPresential, isHotel, total, paid, setPaid } ) {
+export default function PaymentInfo( { match, isPresential, isHotel, setIsHotel, total, paid, setPaid } ) {
   const ticketType = isPresential ? "Presencial" :"Online";
   const locationType = isHotel ? "com Hotel" : "sem Hotel";
   const totalPrice = total;
@@ -28,7 +28,7 @@ export default function PaymentInfo( { match, isPresential, isHotel, total, paid
 
   function finishOrder() {
     const userId = userData.user.id;
-    const promise = api.ticket.save({ userId, isPresential, isHotel, isPaid: true });
+    const promise = api.ticket.save({ userId, isPresential, isHotel: isHotel === null ? false : isHotel, isPaid: true });
 
     promise.then(() => {
       setPaid(true);
