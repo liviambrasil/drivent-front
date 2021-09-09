@@ -8,5 +8,13 @@ export default class TicketApi extends AuthenticatedApi {
         ...this.getAuthorizationHeader()
       }
     });
+  };
+
+  get() {
+    return api.get("/ticket", {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
   }
 }

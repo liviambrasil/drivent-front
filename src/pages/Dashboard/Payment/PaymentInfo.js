@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import PaymentForm from "./creditCard";
 import "react-credit-cards/es/styles-compiled.css";
@@ -6,15 +6,13 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import useApi from "../../../hooks/useApi";
 import UserContext from "../../../contexts/UserContext";
 import Button from "../../../components/Form/Button";
-import { useHistory } from "react-router";
 
-export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
+export default function PaymentInfo( { match, isPresential, isHotel, total, paid, setPaid } ) {
   const ticketType = isPresential ? "Presencial" :"Online";
   const locationType = isHotel ? "com Hotel" : "sem Hotel";
   const totalPrice = total;
   const [disable, setDisable] = useState(true);
   const [isComplete, setIsComplete] = useState( {  } );
-  const [paid, setPaid] = useState(false);
 
   const api = useApi();
 
@@ -26,11 +24,11 @@ export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
     }else{
       setDisable(true);
     }
-  });  
+  }); 
 
   function finishOrder() {
     const userId = userData.user.id;
-    const promise = api.ticket.save({ userId, isPresential, isHotel, isPaid: paid });
+    const promise = api.ticket.save({ userId, isPresential, isHotel, isPaid: true });
 
     promise.then(() => {
       setPaid(true);

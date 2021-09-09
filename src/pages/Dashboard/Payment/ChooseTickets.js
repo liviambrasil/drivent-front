@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Button from "../../../components/Form/Button";
 import useApi from "../../../hooks/useApi";
 
-export default function ChooseTickets( { match, isPresential, setIsPresential, isHotel, setIsHotel, total, setTotal  } ) {
+export default function ChooseTickets( { match, isPresential, setIsPresential, isHotel, setIsHotel, total, setTotal, setPaid } ) {
   const [isRegistered, setIsRegistered] = useState(false);
   
   const history = useHistory();
@@ -14,6 +14,18 @@ export default function ChooseTickets( { match, isPresential, setIsPresential, i
   useEffect(() => {
     api.enrollment.getPersonalInformations().then((response) => {
       if(response.data) setIsRegistered(true);
+    });
+  }, []);
+
+  useEffect(async() => {
+    const promise = api.ticket.get();
+    promise.then(response => {
+      if(response.data) {
+        setIsPresential(response.data.isPresential);
+        setIsHotel(response.data.isHotel);
+        setPaid(true);
+        history.push(`${match.path}/complete`);
+      }
     });
   }, []);
 

@@ -1,6 +1,5 @@
 import React from "react";
 import "react-credit-cards/es/styles-compiled.css";
-//import "react-credit-cards/lib/styles.scss"
 import Cards from "react-credit-cards";
 import styled from "styled-components";
  
