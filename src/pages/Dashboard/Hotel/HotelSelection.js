@@ -5,8 +5,10 @@ import HotelCard from "./HotelCard";
 
 export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
   const [isPresencial, setIsPresencial] = useState(false);
-  const [isPaid, setIsPaid] = useState(true);
-  const { hotel } = useApi();
+  const [isPaid, setIsPaid] = useState(false);
+  const [isHotel, setIsHotel] = useState(false);
+
+  const { hotel, ticket } = useApi();
 
   const [hotelOptions, setHotelOptions] = useState([]);
 
@@ -14,15 +16,16 @@ export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
     hotel.listAll().then((r) => {
       setHotelOptions(r.data);
     });
+    fetchTicketInfo();
   }, []);
 
-  const isPaidAndPresencial = isPresencial && isPaid;
+  const isPaidAndIsHotel = isPresencial && isPaid && isHotel;
 
   return (
     <>
-      {isPaidAndPresencial && <Title>Primeiro, escolha seu hotel</Title>}
+      {isPaidAndIsHotel && <Title>Primeiro, escolha seu hotel</Title>}
       <ChooseHotel>
-        {isPaidAndPresencial &&
+        {isPaidAndIsHotel &&
           hotelOptions.map((h) => (
             <HotelCard
               key={h.id}
@@ -36,19 +39,19 @@ export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
             />
           ))}
       </ChooseHotel>
-      <CenterMessage hidden={isPaidAndPresencial}>
+      <CenterMessage hidden={isPaidAndIsHotel}>
         {isPaid ? (
-          isPresencial ? (
+          isPresencial && isHotel ? (
             ""
           ) : (
-            <OnlineMessage isPresencial={!(isPresencial && isPaid)}>
+            <OnlineMessage>
               Sua modalidade de ingresso não inclui hospedagem
               <br />
               Prossiga para a escolha de atividades
             </OnlineMessage>
           )
         ) : (
-          <NotPaidMessage isPaid={isPaid}>
+          <NotPaidMessage>
             Você precisa ter confirmado pagamento antes
             <br />
             de fazer a escolha de hospedagem
@@ -57,6 +60,14 @@ export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
       </CenterMessage>
     </>
   );
+
+  function fetchTicketInfo() {
+    ticket.getTicket().then(({ data }) => {
+      setIsPaid(data.isPaid);
+      setIsPresencial(data.isPresential);
+      setIsHotel(data.isHotel);
+    });
+  }
 }
 
 const ChooseHotel = styled.ul`
@@ -82,10 +93,5 @@ const CenterMessage = styled.div`
   }
 `;
 
-const OnlineMessage = styled.p`
-  /* ${(props) => (props.isPresencial ? "" : "display: none")} */
-`;
-
-const NotPaidMessage = styled.p`
-  /* ${(props) => (!props.isPaid ? "" : "display: none")} */
-`;
+const OnlineMessage = styled.p``;
+const NotPaidMessage = styled.p``;
