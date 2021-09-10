@@ -28,4 +28,22 @@ export default class ActivityApi extends AuthenticatedApi {
       }
     });
   }
+
+  getStartTime() {
+    console.log("aqui start");
+    return api.get("/startTime", {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  }
+
+  getEndTime() {
+    console.log("aqui end");
+    return api.get("/endTime", {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  }
 }
