@@ -7,7 +7,7 @@ import useApi from "../../../hooks/useApi";
 
 export default function ChooseTickets( { match, isPresential, setIsPresential, isHotel, setIsHotel, total, setTotal, setPaid } ) {
   const [isRegistered, setIsRegistered] = useState(false);
-  
+  console.log(match);
   const history = useHistory();
   const api = useApi();
 
