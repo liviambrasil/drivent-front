@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import useApi from "../../../hooks/useApi";
 import { Typography } from "@material-ui/core";
-import ActivitiesCard from "./ActivitiesCard";
+
 export default function Activities() {
   const [presential, setPresential] = useState(false);
   const api = useApi();
@@ -17,12 +17,13 @@ export default function Activities() {
   return (
     <>
       <StyledTypography variant="h4">Escolha de atividades</StyledTypography>
+
       {!presential
         ? <NoRegister>
           <p>Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades.</p>
         </NoRegister>
         : <p>Renderizar atividades</p>
-      } 
+      }
     </>
   );
 }
