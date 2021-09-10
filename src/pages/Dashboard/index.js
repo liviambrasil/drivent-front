@@ -1,43 +1,60 @@
+
 import { useContext } from "react";
 import {
   Switch,
   Route,
   Redirect,
-  useRouteMatch,
-  useHistory,
-  BrowserRouter as Router
+  useRouteMatch
 } from "react-router-dom";
-import { useState } from "react";
 import styled from "styled-components";
 
-import ChooseTickets from "./Payment/ChooseTickets";
-import PaymentInfo from "./Payment/PaymentInfo";
+import EventInfoContext from "../../contexts/EventInfoContext";
 
-export default function Payment() {
+import NavigationBar from "../../components/Dashboard/NavigationBar";
+
+import DashboardLayout from "../../layouts/Dashboard";
+import FillSubscription from "./FillSubscription";
+import Payment from "./Payment";
+import Hotel from "./Hotel";
+import Activities from "./Activities";
+import Certificate from "./Certificate";
+
+export default function Dashboard() {
+  const { eventInfo } = useContext(EventInfoContext);
   const match = useRouteMatch();
-  const [isPresential, setIsPresential] = useState(null);
-  const [isHotel, setIsHotel] = useState(null);
-  const [total, setTotal] = useState(0);
-  console.log(match);
-  return(
-    
-    <Router>
-      <Switch>
-        <Route path={`${match.path}/ticket`} exact>
-          <ChooseTickets match={ match } isPresential={isPresential} setIsPresential={setIsPresential} 
-            isHotel={isHotel} setIsHotel={setIsHotel} total={total} setTotal={setTotal}/>
-        </Route>
+  
+  return (
+    <DashboardLayout background={eventInfo.backgroundImage}>
+      <NavigationBar />
 
-        <Route path={`${match.path}/complete`} exact>
-          <PaymentInfo isPresential={isPresential} isHotel={isHotel} total={total} />
-        </Route>
-        
-        <Route path={`${match.path}`}>
-          <Redirect to={`${match.url}/ticket`} />
-        </Route>
-      </Switch>
-    </Router>  
-    
+      <Container>
+        <Switch>
+          <Route path={`${match.path}/subscription`} exact>
+            <FillSubscription />
+          </Route>
+
+          <Route path={`${match.path}/payment`} exact>
+            <Payment />
+          </Route>
+
+          <Route path={`${match.path}/hotel`} exact>
+            <Hotel />
+          </Route>
+
+          <Route path={`${match.path}/activities`} exact>
+            <Activities />
+          </Route>
+
+          <Route path={`${match.path}/certificate`} exact>
+            <Certificate />
+          </Route>
+
+          <Route path={`${match.path}/`}>
+            <Redirect to={`${match.url}/subscription`} />
+          </Route>
+        </Switch>
+      </Container>
+    </DashboardLayout>
   );
 }
 
