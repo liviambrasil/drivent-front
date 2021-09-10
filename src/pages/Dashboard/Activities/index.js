@@ -17,7 +17,7 @@ export default function Activities() {
       console.log(response.data);
     });
   }
-  
+
   return (
     <>
       <Title>Escolha de atividades</Title>
@@ -33,12 +33,3 @@ export default function Activities() {
     </> 
   );
 }
-
-const Title = styled.h1`
-font-size: 34px;
-`;
-const Info = styled.h3`
-  font-size: 20px;
-  color: #8E8E8E;
-  margin: 20px 0 10px 0;
-`;
