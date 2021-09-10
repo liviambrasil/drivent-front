@@ -10,8 +10,8 @@ import {
 import { useState } from "react";
 import styled from "styled-components";
 
-import ChooseTickets from "./ChooseTickets";
-import PaymentInfo from "./PaymentInfo";
+import ChooseTickets from "./Payment/ChooseTickets";
+import PaymentInfo from "./Payment/PaymentInfo";
 
 export default function Payment() {
   const match = useRouteMatch();

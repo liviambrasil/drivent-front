@@ -2,8 +2,6 @@ import styled from "styled-components";
 import useApi from "../../../hooks/useApi";
 import { useEffect, useState } from "react";
 import Button from "../../../components/Form/Button";
-import { Typography } from "@material-ui/core";
-
 export default function Activities() {
   const api = useApi();
   const [eventDays, setEventDays] = useState([]);
@@ -19,18 +17,20 @@ export default function Activities() {
       console.log(response.data);
     });
   }
-
+  
   return (
     <>
-      <StyledTypography variant="h4">Escolha de atividades</StyledTypography>
+      <Title>Escolha de atividades</Title>
+      <Info>Primeiro, filtre pelo dia do evento</Info>
 
-      {!presential
-        ? <NoRegister>
-          <p>Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades.</p>
-        </NoRegister>
-        : <p>Renderizar atividades</p>
-      }
-    </>
+      {eventDays.map((d, index) => {
+        return(
+          <Button key = { index} onClick={getLocations}>
+            <p>{d.dayInfo}</p>
+          </Button>
+        );
+      })}
+    </> 
   );
 }
 
@@ -42,3 +42,4 @@ const Info = styled.h3`
   color: #8E8E8E;
   margin: 20px 0 10px 0;
 `;
+
