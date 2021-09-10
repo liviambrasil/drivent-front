@@ -9,7 +9,6 @@ export default function Activities() {
   const [presential, setPresential] = useState(false);
   const [isPaid, setIsPaid] = useState(null);
   const api = useApi();
-  console.log(isPaid);
 
   useEffect(() => {
     const promise = api.ticket.get();
