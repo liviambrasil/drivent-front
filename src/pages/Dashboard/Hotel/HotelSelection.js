@@ -15,6 +15,7 @@ export default function HotelSelection({ selectedHotel, setSelectedHotel }) {
   useEffect(() => {
     hotel.listAll().then((r) => {
       setHotelOptions(r.data);
+      console.log(r.data);
     });
     fetchTicketInfo();
   }, []);
