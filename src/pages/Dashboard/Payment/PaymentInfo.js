@@ -47,8 +47,16 @@ export default function PaymentInfo( { match, isPresential, isHotel, setIsHotel,
       <Info>Ingresso escolhido</Info>
 
       <Card >
-        <h3>{ticketType} + {locationType}</h3>
-        <p>R$ {totalPrice}</p>
+        {isPresential 
+          ? <>
+            <h3>{ticketType} + {locationType}</h3>
+            <p>R$ {totalPrice}</p>
+          </>
+          :<>
+            <h3>{ticketType}</h3>
+            <p>R$ {totalPrice}</p>
+          </>}
+        
       </Card>
       <Info>Pagamento</Info>
 

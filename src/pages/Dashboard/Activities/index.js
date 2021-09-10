@@ -1,15 +1,14 @@
-import styled from "styled-components";
-import { useEffect, useState } from "react";
-import useApi from "../../../hooks/useApi";
-import { Typography } from "@material-ui/core";
-
 import NotPaidMessage from "./NotPaidMessage";
+import styled from "styled-components";
+import useApi from "../../../hooks/useApi";
+import { useEffect, useState } from "react";
+import Button from "../../../components/Form/Button";
 
 export default function Activities() {
   const [presential, setPresential] = useState(false);
   const [isPaid, setIsPaid] = useState(null);
   const api = useApi();
-
+  const [eventDays, setEventDays] = useState([]);
   useEffect(() => {
     const promise = api.ticket.get();
     promise.then((response) => {
@@ -17,10 +16,22 @@ export default function Activities() {
       if (response.data.isPresential) setPresential(true);
     }, []);
   });
+  
+  useEffect(() => {
+    api.activity.getDays().then((response) => {
+      setEventDays(response.data); 
+    });
+  }, []);
 
+  function getLocations() {
+    api.activity.getLocations().then((response) => {
+    });
+  }
+  
   return (
     <>
-      <StyledTypography variant="h4">Escolha de atividades</StyledTypography>
+      <Title>Escolha de atividades</Title>
+     
       {isPaid ? (
         !presential ? (
           <NoRegister>
@@ -30,18 +41,32 @@ export default function Activities() {
             </p>
           </NoRegister>
         ) : (
-          <p>Renderizar atividades</p>
+          <>
+            <Info>Primeiro, filtre pelo dia do evento</Info>
+            {eventDays.map((d, index) => {
+              return(
+                <Button key = { index} onClick={getLocations}>
+                  <p>{d.dayInfo}</p>
+                </Button>
+              );
+            })}
+          </>
         )
       ) : (
         <NotPaidMessage />
       )}
-      {}
-    </>
+     
+    </> 
   );
 }
 
-const StyledTypography = styled(Typography)`
-  margin-bottom: 20px !important;
+const Title = styled.h1`
+font-size: 34px;
+`;
+const Info = styled.h3`
+  font-size: 20px;
+  color: #8E8E8E;
+  margin: 20px 0 10px 0;
 `;
 
 const NoRegister = styled.p`
