@@ -5,6 +5,15 @@ import Button from "../../../components/Form/Button";
 export default function Activities() {
   const api = useApi();
   const [eventDays, setEventDays] = useState([]);
+  const [presential, setPresential] = useState(false);
+  
+  useEffect(() => {
+    const promise = api.ticket.get();
+    promise.then(response => {
+      if(response.data.isPresential) setPresential(true);
+    }, []);
+  });
+  
   useEffect(() => {
     api.activity.getDays().then((response) => {
       console.log(response.data);

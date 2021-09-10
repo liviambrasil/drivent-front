@@ -3,8 +3,10 @@ import UserApi from "../services/UserApi";
 import AuthApi from "../services/auth";
 import CepApi from "../services/CepApi";
 import EnrollmentApi from "../services/EnrollmentApi";
-import TicketApi from "../services/ticket";
-import ActivityApi from "../services/Activity";
+import HotelApi from "../services/hotelApi";
+import TicketApi from "../services/ticketApi";
+import Activity from "../services/Activity";
+
 export default function useApi() {
   return {
     event: new EventApi(),
@@ -12,7 +14,8 @@ export default function useApi() {
     auth: new AuthApi(),
     cep: new CepApi(),
     enrollment: new EnrollmentApi(),
+    hotel: new HotelApi(),
+    activity: new Activity(),
     ticket: new TicketApi(),
-    activity: new ActivityApi(),
   };
 }

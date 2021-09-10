@@ -1,24 +1,18 @@
-import { useState, useContext } from "react";
-import {
-  useHistory,
-} from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import PaymentForm from "./creditCard";
 import "react-credit-cards/es/styles-compiled.css";
-import Cards from "react-credit-cards";
 import { AiFillCheckCircle } from "react-icons/ai";
 import useApi from "../../../hooks/useApi";
 import UserContext from "../../../contexts/UserContext";
 import Button from "../../../components/Form/Button";
 
-export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
-  const history = useHistory();
+export default function PaymentInfo( { match, isPresential, isHotel, setIsHotel, total, paid, setPaid } ) {
   const ticketType = isPresential ? "Presencial" :"Online";
   const locationType = isHotel ? "com Hotel" : "sem Hotel";
   const totalPrice = total;
   const [disable, setDisable] = useState(true);
   const [isComplete, setIsComplete] = useState( {  } );
-  const [paid, setPaid] = useState(false);
 
   const api = useApi();
 
@@ -30,13 +24,20 @@ export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
     }else{
       setDisable(true);
     }
-  });  
+  }); 
 
   function finishOrder() {
-    setPaid(true);
-
     const userId = userData.user.id;
-    api.ticket.save({ userId, isPresential, isHotel, isPaid: paid });
+    const promise = api.ticket.save({ userId, isPresential, isHotel: isHotel === null ? false : isHotel, isPaid: true });
+
+    promise.then(() => {
+      setPaid(true);
+    });
+
+    promise.catch(() => {
+      alert("Você já adquiriu o seu ingresso");
+      setPaid(true);
+    });
   }
 
   return(
@@ -51,7 +52,7 @@ export default function PaymentInfo( { match, isPresential, isHotel, total } ) {
       </Card>
       <Info>Pagamento</Info>
 
-      {!paid 
+      {!paid
         ?<>
           <PaymentForm isComplete={isComplete}/>
   
@@ -96,15 +97,6 @@ margin-bottom: 10px;
    font-size: 14px;
  }
 `;
-
-// const Button = styled.button`
-// width: 182px;
-// height: 37px;
-// background-color: #E0E0E0;
-// box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
-// border-radius: 4px;
-// margin-top :50px;
-// `;
 
 const ConfirmationContainer = styled.div`
 display: flex;

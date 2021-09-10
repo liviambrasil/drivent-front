@@ -1,9 +1,8 @@
 import React from "react";
 import "react-credit-cards/es/styles-compiled.css";
-//import "react-credit-cards/lib/styles.scss"
 import Cards from "react-credit-cards";
 import styled from "styled-components";
- 
+
 export default class PaymentForm extends React.Component {
   state = {
     cvc: "",
@@ -12,20 +11,20 @@ export default class PaymentForm extends React.Component {
     name: "Your name",
     number: "",
   };
- 
+
   handleInputFocus = (e) => {
     this.setState({ focus: e.target.name });
-  }
-  
+  };
+
   handleInputChange = (e) => {
     const int = parseInt(e.target.alt);
-    this.props.isComplete[`${e.target.name}`]=e.target.value;
+    this.props.isComplete[`${e.target.name}`] = e.target.value;
 
     const { name, value } = e.target;
-    
+
     this.setState({ [name]: value });
-  }
-  
+  };
+
   render() {
     return (
       <CreditCardContainer id="PaymentForm">
@@ -37,7 +36,7 @@ export default class PaymentForm extends React.Component {
           number={this.state.number}
         />
         <Form>
-        	<CardNumber
+          <CardNumber
             type="tel"
             alt="19"
             name="number"
@@ -76,50 +75,45 @@ export default class PaymentForm extends React.Component {
   }
 }
 
-const CardNumber=styled.input`
-    width: 300px;
-    height: 40px;
-    border-radius: 5px;
-    
-
-    
+const CardNumber = styled.input`
+  width: 300px;
+  height: 40px;
+  border-radius: 5px;
 `;
 
-const Name=styled.input`
-width:300px;
-height: 40px;
-border-radius: 5px;
-margin-top:20px;
-
+const Name = styled.input`
+  width: 300px;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 20px;
 `;
 
-const ExpiryDate=styled.input`
-width: 200px;
-height: 40px;
-border-radius: 5px;
-    
+const ExpiryDate = styled.input`
+  width: 200px;
+  height: 40px;
+  border-radius: 5px;
 `;
 
-const CVC=styled.input`
-width: 80px;
-height: 40px;
-border-radius: 5px;
+const CVC = styled.input`
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
 `;
 
 const CreditCardContainer = styled.div`
-    display:flex;
-    margin-bottom: 30px;
+  display: flex;
+  margin-bottom: 30px;
 `;
 
 const Form = styled.form`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 180px;
-    margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 180px;
+  margin-left: 20px;
 
-    div{
-        display: flex;
-        justify-content: space-between;
-    }
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
