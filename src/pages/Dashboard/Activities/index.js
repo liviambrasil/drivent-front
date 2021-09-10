@@ -1,7 +1,12 @@
 import styled from "styled-components";
 import useApi from "../../../hooks/useApi";
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import Button from "../../../components/Form/Button";
+=======
+import { Typography } from "@material-ui/core";
+
+>>>>>>> parent of f203fbd... fix: clean
 export default function Activities() {
   const api = useApi();
   const [eventDays, setEventDays] = useState([]);
@@ -20,6 +25,7 @@ export default function Activities() {
 
   return (
     <>
+<<<<<<< HEAD
       <Title>Escolha de atividades</Title>
       <Info>Primeiro, filtre pelo dia do evento</Info>
 
@@ -31,6 +37,17 @@ export default function Activities() {
         );
       })}
     </> 
+=======
+      <StyledTypography variant="h4">Escolha de atividades</StyledTypography>
+
+      {!presential
+        ? <NoRegister>
+          <p>Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades.</p>
+        </NoRegister>
+        : <p>Renderizar atividades</p>
+      }
+    </>
+>>>>>>> parent of f203fbd... fix: clean
   );
 }
 

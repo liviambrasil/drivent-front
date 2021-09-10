@@ -49,4 +49,4 @@ const Container = styled.div`
   @media (max-width: 600px) {
     height: calc(100vh - 80px);
     padding: 20px;
-  }
+  }`;
