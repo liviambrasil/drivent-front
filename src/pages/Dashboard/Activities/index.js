@@ -17,7 +17,7 @@ export default function Activities() {
       console.log(response.data);
     });
   }
-  
+
   return (
     <>
       <Title>Escolha de atividades</Title>

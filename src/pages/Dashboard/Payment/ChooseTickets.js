@@ -1,11 +1,14 @@
 import { Typography } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import {
+  useHistory,
+  useRouteMatch
+} from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../../components/Form/Button";
 import useApi from "../../../hooks/useApi";
 
-export default function ChooseTickets( { match, isPresential, setIsPresential, isHotel, setIsHotel, total, setTotal, setPaid } ) {
+export default function ChooseTickets( { match, isPresential, setIsPresential, isHotel, setIsHotel, total, setTotal  } ) {
   const [isRegistered, setIsRegistered] = useState(false);
   console.log(match);
   const history = useHistory();
@@ -14,18 +17,6 @@ export default function ChooseTickets( { match, isPresential, setIsPresential, i
   useEffect(() => {
     api.enrollment.getPersonalInformations().then((response) => {
       if(response.data) setIsRegistered(true);
-    });
-  }, []);
-
-  useEffect(async() => {
-    const promise = api.ticket.get();
-    promise.then(response => {
-      if(response.data) {
-        setIsPresential(response.data.isPresential);
-        setIsHotel(response.data.isHotel);
-        setPaid(true);
-        history.push(`${match.path}/complete`);
-      }
     });
   }, []);
 
@@ -99,7 +90,6 @@ const NoRegister = styled.p`
   align-items: center;
   width: 100%;
   height: 80%;
-
   p{
     width: 60%;
     font-size: 20px;
@@ -137,11 +127,9 @@ const Card = styled.div`
   flex-direction: column;
   margin: 0 24px 44px 0;
   border: 1px solid #CECECE;
-
   h1{
     margin-bottom: 5px
   }
-
   p{
     font-size: 14px;
     color: #8E8E8E;
