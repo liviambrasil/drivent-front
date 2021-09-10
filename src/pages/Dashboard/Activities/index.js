@@ -45,9 +45,9 @@ export default function Activities() {
             <Info>Primeiro, filtre pelo dia do evento</Info>
             {eventDays.map((d, index) => {
               return(
-                <Button key = { index} onClick={getLocations}>
+                <Days key = { index} onClick={getLocations}>
                   <p>{d.dayInfo}</p>
-                </Button>
+                </Days>
               );
             })}
           </>
@@ -59,6 +59,10 @@ export default function Activities() {
     </> 
   );
 }
+
+const Days = styled(Button)`
+  margin-right: 17px !important;
+`;
 
 const Title = styled.h1`
 font-size: 34px;
