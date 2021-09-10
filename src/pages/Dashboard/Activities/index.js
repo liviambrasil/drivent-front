@@ -22,17 +22,15 @@ export default function Activities() {
 
   return (
     <>
-      <Title>Escolha de atividades</Title>
-      <Info>Primeiro, filtre pelo dia do evento</Info>
+      <StyledTypography variant="h4">Escolha de atividades</StyledTypography>
 
-      {eventDays.map((d, index) => {
-        return(
-          <Button key = { index} onClick={getLocations}>
-            <p>{d.dayInfo}</p>
-          </Button>
-        );
-      })}
-    </> 
+      {!presential
+        ? <NoRegister>
+          <p>Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades.</p>
+        </NoRegister>
+        : <p>Renderizar atividades</p>
+      }
+    </>
   );
 }
 
