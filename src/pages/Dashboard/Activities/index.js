@@ -3,33 +3,46 @@ import { useEffect, useState } from "react";
 import useApi from "../../../hooks/useApi";
 import { Typography } from "@material-ui/core";
 
+import NotPaidMessage from "./NotPaidMessage";
+
 export default function Activities() {
   const [presential, setPresential] = useState(false);
+  const [isPaid, setIsPaid] = useState(null);
   const api = useApi();
+  console.log(isPaid);
 
   useEffect(() => {
     const promise = api.ticket.get();
-    promise.then(response => {
-      if(response.data.isPresential) setPresential(true);
+    promise.then((response) => {
+      setIsPaid(response.data.isPaid);
+      if (response.data.isPresential) setPresential(true);
     }, []);
   });
 
   return (
     <>
       <StyledTypography variant="h4">Escolha de atividades</StyledTypography>
-
-      {!presential
-        ? <NoRegister>
-          <p>Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades.</p>
-        </NoRegister>
-        : <p>Renderizar atividades</p>
-      }
+      {isPaid ? (
+        !presential ? (
+          <NoRegister>
+            <p>
+              Sua modalidade de ingresso não necessita escolher atividade. Você
+              terá acesso a todas as atividades.
+            </p>
+          </NoRegister>
+        ) : (
+          <p>Renderizar atividades</p>
+        )
+      ) : (
+        <NotPaidMessage />
+      )}
+      {}
     </>
   );
 }
 
 const StyledTypography = styled(Typography)`
-  margin-bottom: 20px!important;
+  margin-bottom: 20px !important;
 `;
 
 const NoRegister = styled.p`
@@ -39,10 +52,10 @@ const NoRegister = styled.p`
   width: 100%;
   height: 80%;
 
-  p{
+  p {
     width: 60%;
     font-size: 20px;
-    color: #8E8E8E;
+    color: #8e8e8e;
     text-align: center;
   }
 `;
