@@ -21,7 +21,7 @@ export default function Activities() {
       if (response.data.isPresential) setPresential(true);
     }, []);
   });
-  
+  //chama a requisição 
   useEffect(() => {
     api.activity.getDays().then((response) => {
       setEventDays(response.data); 
