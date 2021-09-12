@@ -7,11 +7,12 @@ export default function Activities() {
   const api = useApi();
   const [eventDays, setEventDays] = useState([]);
   const [event, setEvent] = useState([]);
-  const [startTime, setStartTime] = useState([]);
-  const [endTime, setEndTime] = useState([]);
+  //const [startTime, setStartTime] = useState([]);
+  //const [endTime, setEndTime] = useState([]);
   const [activities, setActivities] = useState([]);
 
   console.log(event, "event");
+
   useEffect(() => {
     api.activity.getDays().then((response) => {
       console.log(response.data);
@@ -47,7 +48,7 @@ export default function Activities() {
           </Button>
         );
       })}
-      {event.length !== 0 ? (<ActivitiesCard startTime={startTime} endTime={endTime} />) : (<></>)}
+      {event.length !== 0 ? (<ActivitiesCard />) : (<></>)}
     </> 
   );
 }

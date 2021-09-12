@@ -6,8 +6,7 @@ import useApi from "../../../hooks/useApi";
 import { BiLogIn } from "react-icons/bi";
 import ActivityBox from "./ActivityBox"; 
 
-export default function ActivitiesCard({ startTime, endTime }) {
-  console.log(startTime, "star");
+export default function ActivitiesCard() {
   return(
     <>
       <Container>
