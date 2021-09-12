@@ -18,7 +18,8 @@ export default function Payment() {
   const [isPresential, setIsPresential] = useState(null);
   const [isHotel, setIsHotel] = useState(null);
   const [total, setTotal] = useState(0);
-  console.log(match);
+  const [paid, setPaid] = useState(false);
+
   return(
     
     <Router>
