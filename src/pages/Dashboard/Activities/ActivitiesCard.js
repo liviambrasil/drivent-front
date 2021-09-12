@@ -2,8 +2,9 @@ import { Typography } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
-import Button from "../../../components/Form/Button";
 import useApi from "../../../hooks/useApi";
+import { BiLogIn } from "react-icons/bi";
+import ActivityBox from "./ActivityBox"; 
 
 export default function ActivitiesCard({ startTime, endTime }) {
   console.log(startTime, "star");
@@ -12,15 +13,15 @@ export default function ActivitiesCard({ startTime, endTime }) {
       <Container>
         <Box> 
           <Local>Auditório Principal</Local> 
-          <ActivityBox><div><p>Minecraf</p><br/> 20:30</div><div>icon</div></ActivityBox>
+          <ActivityBox />
         </Box>
         <Box>
           <Local>Auditório Lateral</Local>
-          <ActivityBox><div><p>Minecraf</p><br/> 20:30</div><div>icon</div></ActivityBox>
+          <ActivityBox />
         </Box>
         <LastBox>
           <Local>Sala de Workshop</Local>
-          <ActivityBox><div><p>Minecraf</p><br/> 20:30</div><div>icon</div></ActivityBox>
+          <ActivityBox />
         </LastBox>
       </Container>
     </>
@@ -44,9 +45,12 @@ const Box = styled.div`
   border-right: 0.5px;
   position: relative;
   display:flex;
-  justify-content: center;
+  align-items: center;
   padding-top: 20px;
+  display: flex;
+  flex-direction: column;
 `;
+
 const LastBox = styled.div`
   margin-top:20px;
   width: 288px;
@@ -67,19 +71,4 @@ const Local = styled.h1`
   display: flex;
   justify-content: center;
   font-size: 17px;
-`;
-
-const ActivityBox = styled.div`
-  width: 265px;
-  height: 79px;
-  background-color: blue;
-  background: #F1F1F1;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  p{
-    font-weight: bold;
-  }
-  
 `;

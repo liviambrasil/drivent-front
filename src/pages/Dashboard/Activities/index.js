@@ -10,6 +10,7 @@ export default function Activities() {
   const [startTime, setStartTime] = useState([]);
   const [endTime, setEndTime] = useState([]);
   const [activities, setActivities] = useState([]);
+
   console.log(event, "event");
   useEffect(() => {
     api.activity.getDays().then((response) => {
@@ -19,22 +20,11 @@ export default function Activities() {
   }, []);
 
   useEffect(() => {
-    api.activity.getStartTime().then((response) => {
-      console.log(response.data);
-      setStartTime(response.data); 
-    });
-    api.activity.getEndTime().then((response) => {
-      console.log(response.data);
-      setEndTime(response.data); 
-    });
-  }, []);
-
-  useEffect(() => {
     api.activity.getActivities().then((response) => {
       console.log(response.data);
       setActivities(response.data); 
     });
-  }, []);
+  }, [event]);
 
   console.log(activities, "activities");
 
