@@ -16,10 +16,14 @@ export default function Rooms({ hotelId, fetchReservation }) {
 
   useEffect(() => {
     if (hotelId === null) return;
-
     setSelectedRoomId(null);
 
     fetchRooms(hotelId);
+    const fetchRoomsIntervalId = setInterval(() => {
+      fetchRooms(hotelId);
+    }, 3000);
+
+    return () => clearInterval(fetchRoomsIntervalId);
   }, [hotelId]);
 
   useEffect(() => {

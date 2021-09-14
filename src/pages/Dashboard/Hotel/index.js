@@ -44,7 +44,6 @@ export default function Hotel() {
   function fetchReservation() {
     hotel.getReservation().then((r) => {
       setReservation(r.data);
-      console.log(r.data);
     });
   }
 
