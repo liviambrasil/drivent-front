@@ -15,13 +15,11 @@ export default function ActivitiesCard({ activities, day }) {
         setAuditorioPrincipal([...auditorioPrincipal, a]);
       }else if(local === "Auditório Lateral") {
         setAuditorioLateral([...auditorioLateral, a]);
-      }else if(local === "Sala de Work") {
+      }else if(local === "Sala de Workshop") {
         setSalaWorkshop([...salaWorkshop, a]);
       }
     });
   }, [activities]);
-
-  if(setAuditorioPrincipal.length === 0) return null;
   return(
     <>
       <Container>
@@ -73,8 +71,10 @@ const LastBox = styled.div`
   border: 1px solid #EBEBEB;
   position: relative;
   display:flex;
-  justify-content: center;
+  //justify-content: center;
+  align-items: center;
   padding-top: 20px;
+  flex-direction: column; 
 `;
 
 const Local = styled.h1`

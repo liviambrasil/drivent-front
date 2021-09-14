@@ -3,19 +3,23 @@ import useApi from "../../../hooks/useApi";
 import { BiLogIn } from "react-icons/bi"; 
 import { AiOutlineCloseCircle } from "react-icons/ai";
 export default function ActivityBox({ content }) {
-  console.log(content[0], content[0]?.start,  "content");
+  console.log(content, "content");
   return(
-    <>
-      <Box>
-        <div className="text">
-          <p>{content[0]?.name}</p><br/> {content[0]?.start.split(" ")[3]} - {content[0]?.end.split(" ")[3]}
-        </div>
-        <Line />
-        <IconBox vacancies={content[0]?.vacancies}>
-          {content[0]?.vacancies > 0 ? <SubscriptionIcon /> : <OutIcon /> }
-          <p>{content[0]?.vacancies > 0 ? content[0]?.vacancies : "Esgotado" }</p>
-        </IconBox>
-      </Box>
+    <>{content.map((activitie) => {
+      console.log(activitie?.name, "CHEGOU NO FOR");
+      return( 
+        <Box>
+          <div className="text">
+            <p>{activitie?.name}</p><br/> {activitie?.start.split(" ")[3]} - {activitie?.end.split(" ")[3]}
+          </div>
+          <Line />
+          <IconBox vacancies={activitie?.vacancies}>
+            {activitie?.vacancies > 0 ? <SubscriptionIcon /> : <OutIcon /> }
+            <p>{activitie?.vacancies > 0 ? activitie?.vacancies : "Esgotado" }</p>
+          </IconBox>
+        </Box>
+      );
+    })}
     </>
   );
 }
@@ -55,9 +59,10 @@ const IconBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 5px;
+  //background-color: blue;
   p{
   font-size: 10px;
-  margin-left: ${(props) => (props.vacancies > 0 ? "5px" : "0px")};
+  margin-left: 5px;
   margin-top:5px;
   color: ${(props) => (props.vacancies > 0 ? "#078632" : "#CC6666")};
   line-height: 11px;
@@ -68,6 +73,7 @@ const SubscriptionIcon = styled(BiLogIn)`
   cursor: pointer;
 `;
 const OutIcon = styled(AiOutlineCloseCircle)`
-  font-size: 25px;
+  font-size: 22px;
   cursor: pointer;
+  margin-left: 5px;
 `;
