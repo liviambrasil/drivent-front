@@ -47,7 +47,7 @@ const Line = styled.div`
   background: #CFCFCF;
 `;
 const IconBox = styled.div`
-  color: ${(props) => (props.vacancies > 0 ? "#078632" : "red")};
+  color: ${(props) => (props.vacancies > 0 ? "#078632" : "#CC6666")};
   width: 55px;
   height: 55px;
   display: flex;
@@ -59,7 +59,7 @@ const IconBox = styled.div`
   font-size: 10px;
   margin-left: ${(props) => (props.vacancies > 0 ? "5px" : "0px")};
   margin-top:5px;
-  color: ${(props) => (props.vacancies > 0 ? "#078632" : "red")};
+  color: ${(props) => (props.vacancies > 0 ? "#078632" : "#CC6666")};
   line-height: 11px;
   }
 `;
