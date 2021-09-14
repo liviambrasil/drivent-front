@@ -1,18 +1,19 @@
 import styled from "styled-components";
 import useApi from "../../../hooks/useApi";
 import { BiLogIn } from "react-icons/bi"; 
-
-export default function ActivityBox() {
+import { AiOutlineCloseCircle } from "react-icons/ai";
+export default function ActivityBox({ content }) {
+  console.log(content[0], content[0]?.start,  "content");
   return(
     <>
       <Box>
         <div className="text">
-          <p>Minecraf: montando o PC ideal</p><br/> 09:00 - 10:00
+          <p>{content[0]?.name}</p><br/> {content[0]?.start.split(" ")[3]} - {content[0]?.end.split(" ")[3]}
         </div>
         <Line />
-        <IconBox>
-          <SubscriptionIcon />
-          <p>27 vagas</p>
+        <IconBox vacancies={content[0]?.vacancies}>
+          {content[0]?.vacancies > 0 ? <SubscriptionIcon /> : <OutIcon /> }
+          <p>{content[0]?.vacancies > 0 ? content[0]?.vacancies : "Esgotado" }</p>
         </IconBox>
       </Box>
     </>
@@ -46,7 +47,7 @@ const Line = styled.div`
   background: #CFCFCF;
 `;
 const IconBox = styled.div`
-  color: #078632;
+  color: ${(props) => (props.vacancies > 0 ? "#078632" : "red")};
   width: 55px;
   height: 55px;
   display: flex;
@@ -56,12 +57,17 @@ const IconBox = styled.div`
   margin-left: 5px;
   p{
   font-size: 10px;
-  margin-left: 5px;
-  color: #078632;
+  margin-left: ${(props) => (props.vacancies > 0 ? "5px" : "0px")};
+  margin-top:5px;
+  color: ${(props) => (props.vacancies > 0 ? "#078632" : "red")};
   line-height: 11px;
   }
 `;
 const SubscriptionIcon = styled(BiLogIn)`
+  font-size: 25px;
+  cursor: pointer;
+`;
+const OutIcon = styled(AiOutlineCloseCircle)`
   font-size: 25px;
   cursor: pointer;
 `;

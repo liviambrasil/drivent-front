@@ -19,7 +19,7 @@ export default function Payment() {
   const [isHotel, setIsHotel] = useState(null);
   const [total, setTotal] = useState(0);
   const [paid, setPaid] = useState(false);
-
+  
   return(
     
     <Router>

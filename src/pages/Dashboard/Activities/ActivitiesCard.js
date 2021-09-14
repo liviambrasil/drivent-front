@@ -1,26 +1,41 @@
-import { Typography } from "@material-ui/core";
-import { useEffect, useState } from "react";
-import { useHistory, useRouteMatch } from "react-router-dom";
+
+import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import useApi from "../../../hooks/useApi";
-import { BiLogIn } from "react-icons/bi";
 import ActivityBox from "./ActivityBox"; 
 
-export default function ActivitiesCard() {
+export default function ActivitiesCard({ activities, day }) {
+  const [auditorioPrincipal, setAuditorioPrincipal] = useState([]);
+  const [salaWorkshop, setSalaWorkshop] = useState([]);
+  const [auditorioLateral, setAuditorioLateral] = useState([]);
+
+  useEffect(() => {
+    activities.forEach((a) => {
+      const local = a.location["name"];
+      if(local === "Auditório Principal") {
+        setAuditorioPrincipal([...auditorioPrincipal, a]);
+      }else if(local === "Auditório Lateral") {
+        setAuditorioLateral([...auditorioLateral, a]);
+      }else if(local === "Sala de Work") {
+        setSalaWorkshop([...salaWorkshop, a]);
+      }
+    });
+  }, [activities]);
+
+  if(setAuditorioPrincipal.length === 0) return null;
   return(
     <>
       <Container>
         <Box> 
           <Local>Auditório Principal</Local> 
-          <ActivityBox />
+          <ActivityBox content = {auditorioPrincipal}/>
         </Box>
         <Box>
           <Local>Auditório Lateral</Local>
-          <ActivityBox />
+          <ActivityBox content={auditorioLateral} />
         </Box>
         <LastBox>
           <Local>Sala de Workshop</Local>
-          <ActivityBox />
+          <ActivityBox content={auditorioLateral}/>
         </LastBox>
       </Container>
     </>

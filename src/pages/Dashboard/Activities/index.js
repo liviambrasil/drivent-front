@@ -1,9 +1,10 @@
 import NotPaidMessage from "./NotPaidMessage";
 import styled from "styled-components";
 import useApi from "../../../hooks/useApi";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Button from "../../../components/Form/Button";
 import ActivitiesCard from "./ActivitiesCard";
+
 export default function Activities() {
   const [presential, setPresential] = useState(false);
   const [isPaid, setIsPaid] = useState(null);
@@ -11,8 +12,9 @@ export default function Activities() {
   const [eventDays, setEventDays] = useState([]);
   const [event, setEvent] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [day, setDay] = useState([]);
 
-  console.log(event, "event");
+  console.log(activities, "event");
 
   useEffect(() => {
     const promise = api.ticket.get();
@@ -21,30 +23,28 @@ export default function Activities() {
       if (response.data.isPresential) setPresential(true);
     }, []);
   });
-  //chama a requisição 
+
   useEffect(() => {
     api.activity.getDays().then((response) => {
-      setEventDays(response.data); 
+      setEventDays(response.data);
+      console.log(eventDays);
     });
   }, []);
 
-  useEffect(() => {
+  function getActivities(info) {
     api.activity.getActivities().then((response) => {
-      console.log(response.data);
-      setActivities(response.data); 
-    });
-  }, [event]);
-
-  console.log(activities, "activities");
-
-  function getLocations() {
-    api.activity.getLocations().then((response) => {
-      console.log(response.data);
-      setEvent(response.data);
+      console.log(response.data, "indexActivities");
+      const result = response.data; 
+      let activities = result.filter((e) => {
+        if(e.start.split(",", 1)[0] === info.split(",", 1)[0]) {
+          return e;     
+        }
+      }
+      );
+      setActivities(activities);
     });
   }
-  console.log(event, "event");
-  
+
   return (
     <>
       <Title>Escolha de atividades</Title>
@@ -60,13 +60,15 @@ export default function Activities() {
           <>
             <Info>Primeiro, filtre pelo dia do evento</Info>
             {eventDays.map((d, index) => {
+              console.log(d.dayInfo, "AQUIIIIIII");
               return(
-                <Days key = { index} onClick={getLocations}>
-                  <p>{d.dayInfo}</p>
+                <Days key = { index} onClick={() => getActivities(d.dayInfo)}>
+                  <p>{d.dayInfo.split(",", 1)}</p>
                 </Days>
               );
             })}
-            {event.length !== 0 ? (<ActivitiesCard />) : (<></>)}
+            {activities.length !== 0 ? 
+              <ActivitiesCard activities={activities} day={day}/> : <></>}
           </>
         )
       ) : (
