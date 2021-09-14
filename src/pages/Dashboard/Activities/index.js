@@ -10,11 +10,7 @@ export default function Activities() {
   const [isPaid, setIsPaid] = useState(null);
   const api = useApi();
   const [eventDays, setEventDays] = useState([]);
-  const [event, setEvent] = useState([]);
   const [activities, setActivities] = useState([]);
-  const [day, setDay] = useState([]);
-
-  console.log(activities, "event");
 
   useEffect(() => {
     const promise = api.ticket.get();
@@ -86,6 +82,7 @@ const Days = styled(Button)`
 const Title = styled.h1`
   font-size: 34px;
 `;
+
 const Info = styled.h3`
   font-size: 20px;
   color: #8E8E8E;
@@ -98,7 +95,6 @@ const NoRegister = styled.p`
   align-items: center;
   width: 100%;
   height: 80%;
-
   p {
     width: 60%;
     font-size: 20px;

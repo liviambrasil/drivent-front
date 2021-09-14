@@ -1,23 +1,23 @@
 import styled from "styled-components";
-import useApi from "../../../hooks/useApi";
 import { BiLogIn } from "react-icons/bi"; 
 import { AiOutlineCloseCircle } from "react-icons/ai";
 export default function ActivityBox({ content }) {
   return(
-    <>{content.map((activitie) => {    
-      return( 
-        <Box>
-          <div className="text">
-            <p>{activitie?.name}</p><br/> {activitie?.start.split(" ")[3]} - {activitie?.end.split(" ")[3]}
-          </div>
-          <Line />
-          <IconBox vacancies={activitie?.vacancies}>
-            {activitie?.vacancies > 0 ? <SubscriptionIcon /> : <OutIcon /> }
-            <p>{activitie?.vacancies > 0 ? activitie?.vacancies : "Esgotado" }</p>
-          </IconBox>
-        </Box>
-      );
-    })}
+    <>
+      {content.map((activitie) => {    
+        return( 
+          <Box>
+            <div className="text">
+              <p>{activitie?.name}</p><br/> {activitie?.start.split(" ")[3]} - {activitie?.end.split(" ")[3]}
+            </div>
+            <Line />
+            <IconBox vacancies={activitie?.vacancies}>
+              {activitie?.vacancies > 0 ? <SubscriptionIcon /> : <OutIcon /> }
+              <p>{activitie?.vacancies > 0 ? activitie?.vacancies : "Esgotado" }</p>
+            </IconBox>
+          </Box>
+        );
+      })}
     </>
   );
 }
