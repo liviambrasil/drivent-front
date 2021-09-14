@@ -17,30 +17,4 @@ export default class ActivityApi extends AuthenticatedApi {
       }
     });
   }
-
-  getLocations() {
-    return api.get("/locations", {
-      headers: {
-        ...this.getAuthorizationHeader()
-      }
-    });
-  }
-
-  getStartTime() {
-    console.log("aqui start");
-    return api.get("/startTime", {
-      headers: {
-        ...this.getAuthorizationHeader()
-      }
-    });
-  }
-
-  getEndTime() {
-    console.log("aqui end");
-    return api.get("/endTime", {
-      headers: {
-        ...this.getAuthorizationHeader()
-      }
-    });
-  }
 }

@@ -68,7 +68,7 @@ export default function Activities() {
               );
             })}
             {activities.length !== 0 ? 
-              <ActivitiesCard activities={activities} day={day}/> : <></>}
+              <ActivitiesCard activities={activities} /> : <></>}
           </>
         )
       ) : (

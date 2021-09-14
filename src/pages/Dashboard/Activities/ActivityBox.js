@@ -3,10 +3,8 @@ import useApi from "../../../hooks/useApi";
 import { BiLogIn } from "react-icons/bi"; 
 import { AiOutlineCloseCircle } from "react-icons/ai";
 export default function ActivityBox({ content }) {
-  console.log(content, "content");
   return(
-    <>{content.map((activitie) => {
-      console.log(activitie?.name, "CHEGOU NO FOR");
+    <>{content.map((activitie) => {    
       return( 
         <Box>
           <div className="text">

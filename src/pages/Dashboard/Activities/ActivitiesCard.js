@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import ActivityBox from "./ActivityBox"; 
 
-export default function ActivitiesCard({ activities, day }) {
+export default function ActivitiesCard({ activities }) {
   const [auditorioPrincipal, setAuditorioPrincipal] = useState([]);
   const [salaWorkshop, setSalaWorkshop] = useState([]);
   const [auditorioLateral, setAuditorioLateral] = useState([]);
