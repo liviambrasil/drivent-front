@@ -46,6 +46,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 70px;
+  //white-space: nowrap;
 `;
 
 const Box = styled.div`
@@ -61,6 +62,8 @@ const Box = styled.div`
   padding-top: 20px;
   display: flex;
   flex-direction: column;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 const LastBox = styled.div`
