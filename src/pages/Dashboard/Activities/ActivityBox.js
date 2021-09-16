@@ -4,7 +4,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 export default function ActivityBox({ content }) {
   function duration(start, end) {
     if(end - start > 0) {
-      console.log(end - start, "aqui");
+      console.log(end, "aqui");
       return true;
     }else {
       return false;
@@ -15,7 +15,8 @@ export default function ActivityBox({ content }) {
     <>
       {content.map((activitie) => {    
         const startTime = activitie?.start.split(" ")[3].replace(":", "");
-        const endTime = activitie?.start.split(" ")[3].replace(":", "");
+        const endTime = activitie?.end.split(" ")[3].replace(":", "");
+        console.log(endTime, startTime, "AQUI");
         return( 
           <Box duration = {duration(startTime, endTime)}>
             <div className="text">
@@ -35,7 +36,7 @@ export default function ActivityBox({ content }) {
 
 const Box = styled.div`
   width: 265px;
-  height: ${(props) => (props.duration ? "158px" : "79px")};
+  height: ${(props) => (props.duration ? "186px" : "78px")};
   background: #F1F1F1;
   border-radius: 5px;
   display: flex;
@@ -43,7 +44,11 @@ const Box = styled.div`
   align-items: center;
   padding: 15px;
   margin-bottom:10px;
+  position: relative;
   .text {
+    position: absolute;
+    top: 20px;
+    background-color: pink;
     color: #343434;
     font-size: 12px;
     height: 55px;
@@ -59,6 +64,8 @@ const Line = styled.div`
   width:1px;
   height: 100%;
   background: #CFCFCF;
+  ${(props) => (props.duration ? "position: absolute" : "")};;
+  ${(props) => (props.duration ? "left = 205px" : "")}
 `;
 
 const IconBox = styled.div`
