@@ -1,13 +1,13 @@
 
 import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import ActivityBox from "./ActivityBox"; 
-
+import ActivityBox from "./ActivityBox";
 export default function ActivitiesCard({ activities }) {
   const [auditorioPrincipal, setAuditorioPrincipal] = useState([]);
   const [salaWorkshop, setSalaWorkshop] = useState([]);
   const [auditorioLateral, setAuditorioLateral] = useState([]);
-
+  const [render, setRender] = useState(false);
+  
   useEffect(() => {
     activities.forEach((a) => {
       const local = a.location["name"];
@@ -19,7 +19,8 @@ export default function ActivitiesCard({ activities }) {
         setSalaWorkshop([...salaWorkshop, a]);
       }
     });
-  }, [activities]);
+  }, []);
+
   return(
     <>
       <Container>
@@ -29,7 +30,7 @@ export default function ActivitiesCard({ activities }) {
         </Box>
         <Box>
           <Local>Auditório Lateral</Local>
-          <ActivityBox content={auditorioLateral} />
+          <ActivityBox content={auditorioLateral}/>
         </Box>
         <LastBox>
           <Local>Sala de Workshop</Local>

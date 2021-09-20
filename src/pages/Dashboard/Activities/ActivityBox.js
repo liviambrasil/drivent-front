@@ -1,29 +1,28 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { BiLogIn } from "react-icons/bi"; 
 import { AiOutlineCloseCircle } from "react-icons/ai";
-export default function ActivityBox({ content }) {
+export default function ActivityBox({ content, setRender }) {
   function duration(start, end) {
-    if(end - start > 0) {
-      console.log(end, "aqui");
-      return true;
-    }else {
-      return false;
+    let result = false;
+    if(end.split(":")[0] - start.split(":")[0] > 1) {
+      result = true;
     }
+    return result;
   }
-    
   return(
     <>
-      {content.map((activitie) => {    
-        const startTime = activitie?.start.split(" ")[3].replace(":", "");
-        const endTime = activitie?.end.split(" ")[3].replace(":", "");
-        console.log(endTime, startTime, "AQUI");
+      {content.map((activitie, i) => {    
+        let startTime = activitie?.start.split(" ")[3];
+        let endTime = activitie?.end.split(" ")[3];
+        console.log(startTime, endTime, "aqui");
         return( 
-          <Box duration = {duration(startTime, endTime)}>
+          <Box key= {i} duration = {duration(startTime, endTime)}>
             <div className="text">
               <p>{activitie?.name}</p><br/> {activitie?.start.split(" ")[3]} - {activitie?.end.split(" ")[3]}
             </div>
-            <Line />
-            <IconBox vacancies={activitie?.vacancies}>
+            <Line duration = {duration(startTime, endTime)}/>
+            <IconBox duration = {duration(startTime, endTime)} vacancies={activitie?.vacancies}>
               {activitie?.vacancies > 0 ? <SubscriptionIcon /> : <OutIcon /> }
               <p>{activitie?.vacancies > 0 ? activitie?.vacancies : "Esgotado" }</p>
             </IconBox>
@@ -33,10 +32,10 @@ export default function ActivityBox({ content }) {
     </>
   );
 }
-
+ 
 const Box = styled.div`
   width: 265px;
-  height: ${(props) => (props.duration ? "186px" : "78px")};
+  height:${(props) => (props.duration ? "168px" : "78px")};
   background: #F1F1F1;
   border-radius: 5px;
   display: flex;
@@ -46,9 +45,8 @@ const Box = styled.div`
   margin-bottom:10px;
   position: relative;
   .text {
-    position: absolute;
-    top: 20px;
-    background-color: pink;
+    position: ${(props) => (props.duration ? "absolute" : "static")};
+    top: 12px;
     color: #343434;
     font-size: 12px;
     height: 55px;
@@ -62,22 +60,23 @@ const Box = styled.div`
 
 const Line = styled.div`
   width:1px;
-  height: 100%;
+  height: ${(props) => (props.duration ? "145px" : "100%")};
   background: #CFCFCF;
-  ${(props) => (props.duration ? "position: absolute" : "")};;
-  ${(props) => (props.duration ? "left = 205px" : "")}
+  position: ${(props) => (props.duration ? "absolute" : "static")};
+  right: ${(props) => (props.duration ? "75px" : null)}; 
 `;
 
 const IconBox = styled.div`
   color: ${(props) => (props.vacancies > 0 ? "#078632" : "#CC6666")};
   width: 55px;
-  height: ${(props) => (props.duration ? "110px" : "55px")};
+  height: 55px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-left: 5px;
-  background-color: blue;
+  position: ${(props) => (props.duration ? "absolute" : "static")};
+  right: ${(props) => (props.duration ? "15px" : null)}; ;
   p{
   font-size: 10px;
   margin-left: 5px;
