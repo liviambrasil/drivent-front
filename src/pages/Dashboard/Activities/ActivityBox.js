@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { BiLogIn } from "react-icons/bi"; 
 import { AiOutlineCloseCircle } from "react-icons/ai";
 export default function ActivityBox({ content, setRender }) {
@@ -15,7 +14,6 @@ export default function ActivityBox({ content, setRender }) {
       {content.map((activitie, i) => {    
         let startTime = activitie?.start.split(" ")[3];
         let endTime = activitie?.end.split(" ")[3];
-        console.log(startTime, endTime, "aqui");
         return( 
           <Box key= {i} duration = {duration(startTime, endTime)}>
             <div className="text">
@@ -78,7 +76,7 @@ const IconBox = styled.div`
   right: ${(props) => (props.duration ? "15px" : null)}; ;
   p{
   font-size: 10px;
-  margin-left: 5px;
+  margin-left: 7px;
   margin-top:5px;
   color: ${(props) => (props.vacancies > 0 ? "#078632" : "#CC6666")};
   line-height: 11px;

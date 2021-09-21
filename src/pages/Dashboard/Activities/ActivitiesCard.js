@@ -6,10 +6,10 @@ export default function ActivitiesCard({ activities }) {
   const [auditorioPrincipal, setAuditorioPrincipal] = useState([]);
   const [salaWorkshop, setSalaWorkshop] = useState([]);
   const [auditorioLateral, setAuditorioLateral] = useState([]);
-  console.log(activities, "HEEEY");
   let audiPrincipalAux = [];
   let audiLateralAux = [];
   let salaWorkshopAux = []; 
+
   useEffect(() => {
     activities.forEach((a) => {
       const local = a.location["name"];
@@ -25,7 +25,6 @@ export default function ActivitiesCard({ activities }) {
       }
     });
   }, []);
-  console.log(salaWorkshop, "LATERAL", auditorioPrincipal, "PRINCIPAL");
 
   return(
     <>

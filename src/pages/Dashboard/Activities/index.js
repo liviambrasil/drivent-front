@@ -23,13 +23,11 @@ export default function Activities() {
   useEffect(() => {
     api.activity.getDays().then((response) => {
       setEventDays(response.data);
-      console.log(eventDays);
     });
   }, []);
 
   function getActivities(info) {
     api.activity.getActivities().then((response) => {
-      console.log(response.data, "indexActivities");
       const result = response.data; 
       let activities = result.filter((e) => {
         if(e.start.split(",", 1)[0] === info.split(",", 1)[0]) {
@@ -56,7 +54,6 @@ export default function Activities() {
           <>
             <Info>Primeiro, filtre pelo dia do evento</Info>
             {eventDays.map((d, index) => {
-              console.log(d.dayInfo, "AQUIIIIIII");
               return(
                 <Days key = { index} onClick={() => getActivities(d.dayInfo)}>
                   <p>{d.dayInfo.split(",", 1)}</p>
