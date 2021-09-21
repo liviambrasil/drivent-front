@@ -55,7 +55,7 @@ export default function Activities() {
             <Info>Primeiro, filtre pelo dia do evento</Info>
             {eventDays.map((d, index) => {
               return(
-                <Days key = { index} onClick={() => getActivities(d.dayInfo)}>
+                <Days key = {index} onClick={() => getActivities(d.dayInfo)}>
                   <p>{d.dayInfo.split(",", 1)}</p>
                 </Days>
               );

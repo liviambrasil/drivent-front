@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { BiLogIn } from "react-icons/bi"; 
 import { AiOutlineCloseCircle } from "react-icons/ai";
-export default function ActivityBox({ content, setRender }) {
+export default function ActivityBox({ content }) {
   function duration(start, end) {
     let result = false;
     if(end.split(":")[0] - start.split(":")[0] > 1) {
@@ -53,7 +53,7 @@ const Box = styled.div`
     p {
       font-weight: bold;
     }
-    }
+  }
 `;
 
 const Line = styled.div`
