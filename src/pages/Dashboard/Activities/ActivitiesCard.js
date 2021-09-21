@@ -6,20 +6,26 @@ export default function ActivitiesCard({ activities }) {
   const [auditorioPrincipal, setAuditorioPrincipal] = useState([]);
   const [salaWorkshop, setSalaWorkshop] = useState([]);
   const [auditorioLateral, setAuditorioLateral] = useState([]);
-  const [render, setRender] = useState(false);
-  
+  console.log(activities, "HEEEY");
+  let audiPrincipalAux = [];
+  let audiLateralAux = [];
+  let salaWorkshopAux = []; 
   useEffect(() => {
     activities.forEach((a) => {
       const local = a.location["name"];
       if(local === "Auditório Principal") {
-        setAuditorioPrincipal([...auditorioPrincipal, a]);
+        audiPrincipalAux.push(a);
+        setAuditorioPrincipal(audiPrincipalAux);
       }else if(local === "Auditório Lateral") {
-        setAuditorioLateral([...auditorioLateral, a]);
+        audiLateralAux.push(a); 
+        setAuditorioLateral(audiLateralAux);
       }else if(local === "Sala de Workshop") {
-        setSalaWorkshop([...salaWorkshop, a]);
+        salaWorkshopAux.push(a);
+        setSalaWorkshop(salaWorkshopAux);
       }
     });
   }, []);
+  console.log(salaWorkshop, "LATERAL", auditorioPrincipal, "PRINCIPAL");
 
   return(
     <>
@@ -34,7 +40,7 @@ export default function ActivitiesCard({ activities }) {
         </Box>
         <LastBox>
           <Local>Sala de Workshop</Local>
-          <ActivityBox content={auditorioLateral}/>
+          <ActivityBox content={salaWorkshop}/>
         </LastBox>
       </Container>
     </>
@@ -46,8 +52,7 @@ const Container = styled.div`
   height: 390px;
   display: flex;
   justify-content: center;
-  margin-top: 70px;
-  //white-space: nowrap;
+  margin-top: 60px;
 `;
 
 const Box = styled.div`
@@ -63,8 +68,6 @@ const Box = styled.div`
   padding-top: 20px;
   display: flex;
   flex-direction: column;
-  white-space: nowrap;
-  overflow: hidden;
 `;
 
 const LastBox = styled.div`
@@ -75,7 +78,6 @@ const LastBox = styled.div`
   border: 1px solid #EBEBEB;
   position: relative;
   display:flex;
-  //justify-content: center;
   align-items: center;
   padding-top: 20px;
   flex-direction: column; 
@@ -88,5 +90,5 @@ const Local = styled.h1`
   top:-30px;
   display: flex;
   justify-content: center;
-  font-size: 17px;
+  font-size: 17px
 `;

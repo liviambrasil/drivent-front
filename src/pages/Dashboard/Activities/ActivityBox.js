@@ -60,10 +60,9 @@ const Box = styled.div`
 
 const Line = styled.div`
   width:1px;
-  height: ${(props) => (props.duration ? "145px" : "100%")};
+  height: ${(props) => (props.duration ? "136px" : "100%")};
   background: #CFCFCF;
-  position: ${(props) => (props.duration ? "absolute" : "static")};
-  right: ${(props) => (props.duration ? "75px" : null)}; 
+  margin-left: ${(props) => (props.duration ? "179px;" : null)}; 
 `;
 
 const IconBox = styled.div`
