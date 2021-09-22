@@ -2,6 +2,7 @@ import api from "./api";
 
 export default class EventApi {
   getEventInfo() {
-    return api.get("/event");
+    const teste= api.get("/event");
+    return teste;
   }
 }

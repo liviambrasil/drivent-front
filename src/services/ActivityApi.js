@@ -10,16 +10,8 @@ export default class ActivityApi extends AuthenticatedApi {
     });
   }
 
-  getActivities(body) {
-    return api.get("/activity", body, {
-      headers: {
-        ...this.getAuthorizationHeader()
-      }
-    });
-  }
-
-  getLocations() {
-    return api.get("/locations", {
+  getActivities() {
+    return api.get("/activity", {
       headers: {
         ...this.getAuthorizationHeader()
       }

@@ -1,14 +1,17 @@
 import NotPaidMessage from "./NotPaidMessage";
 import styled from "styled-components";
 import useApi from "../../../hooks/useApi";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Button from "../../../components/Form/Button";
+import ActivitiesCard from "./ActivitiesCard";
 
 export default function Activities() {
   const [presential, setPresential] = useState(false);
   const [isPaid, setIsPaid] = useState(null);
   const api = useApi();
   const [eventDays, setEventDays] = useState([]);
+  const [activities, setActivities] = useState([]);
+
   useEffect(() => {
     const promise = api.ticket.get();
     promise.then((response) => {
@@ -16,22 +19,29 @@ export default function Activities() {
       if (response.data.isPresential) setPresential(true);
     }, []);
   });
-  
+
   useEffect(() => {
     api.activity.getDays().then((response) => {
-      setEventDays(response.data); 
+      setEventDays(response.data);
     });
   }, []);
 
-  function getLocations() {
-    api.activity.getLocations().then((response) => {
+  function getActivities(info) {
+    api.activity.getActivities().then((response) => {
+      const result = response.data; 
+      let activities = result.filter((e) => {
+        if(e.start.split(",", 1)[0] === info.split(",", 1)[0]) {
+          return e;     
+        }
+      }
+      );
+      setActivities(activities);
     });
   }
-  
+
   return (
     <>
       <Title>Escolha de atividades</Title>
-     
       {isPaid ? (
         !presential ? (
           <NoRegister>
@@ -45,11 +55,13 @@ export default function Activities() {
             <Info>Primeiro, filtre pelo dia do evento</Info>
             {eventDays.map((d, index) => {
               return(
-                <Days key = { index} onClick={getLocations}>
-                  <p>{d.dayInfo}</p>
+                <Days key = {index} onClick={() => getActivities(d.dayInfo)}>
+                  <p>{d.dayInfo.split(",", 1)}</p>
                 </Days>
               );
             })}
+            {activities.length !== 0 ? 
+              <ActivitiesCard activities={activities} /> : <></>}
           </>
         )
       ) : (
@@ -65,8 +77,9 @@ const Days = styled(Button)`
 `;
 
 const Title = styled.h1`
-font-size: 34px;
+  font-size: 34px;
 `;
+
 const Info = styled.h3`
   font-size: 20px;
   color: #8E8E8E;
@@ -79,7 +92,6 @@ const NoRegister = styled.p`
   align-items: center;
   width: 100%;
   height: 80%;
-
   p {
     width: 60%;
     font-size: 20px;

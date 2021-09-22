@@ -1,5 +1,11 @@
+
 import { useContext } from "react";
-import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Redirect,
+  useRouteMatch
+} from "react-router-dom";
 import styled from "styled-components";
 
 import EventInfoContext from "../../contexts/EventInfoContext";
@@ -57,7 +63,6 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   overflow-y: auto;
-
   @media (max-width: 600px) {
     height: calc(100vh - 80px);
     padding: 20px;
